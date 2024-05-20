@@ -23,12 +23,14 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/login", "/register").permitAll()
+                        .requestMatchers(
+                                "/login",
+                                "/register",
+                                "/main").permitAll()
                         .requestMatchers(
                                 new AntPathRequestMatcher("/api/**"),
                                 new AntPathRequestMatcher("/error")
-                                )
-                        .permitAll()
+                                ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .formLogin(form -> form
@@ -36,7 +38,8 @@ public class SecurityConfig {
                         .loginProcessingUrl("/login")
                         .usernameParameter("username")
                         .passwordParameter("password")
-                        .defaultSuccessUrl("/")
+                       // .successForwardUrl("/main")
+                        .defaultSuccessUrl("/main")
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
