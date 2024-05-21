@@ -29,7 +29,8 @@ public class SecurityConfig {
                                 "/main").permitAll()
                         .requestMatchers(
                                 new AntPathRequestMatcher("/api/**"),
-                                new AntPathRequestMatcher("/error")
+                                new AntPathRequestMatcher("/error"),
+                                new AntPathRequestMatcher("/**")
                                 ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
