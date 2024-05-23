@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" data-bs-theme="auto" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Workspace</title>
+    <link rel="icon" type="image/x-icon" th:href="@{/images/logo.png}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/workspace.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header.html :: header}"></div>
+<main class="w-100 m-auto">
+    <div class="">
+        <div class="d-flex flex-row" style="min-height: 100vh;">
+            <div class="d-flex flex-column bg-light border-end" style="width: 20%;padding: 1em;">
+                <div class="d-flex flex-row align-items-center">
+                    <img th:src="@{/images/project.png}" style="height: 65%" alt="">
+                    <span style="margin-left: 0.5em;font-size: 17px;font-weight: bold;">Workspace Name</span>
+                </div>
+                <hr>
+                <div class="d-flex flex-column">
+                    <div class="d-flex flex-row options">
+                        <a href="">Boards</a>
+                    </div>
+                    <div class="d-flex flex-row options">
+                        <a href="">Members</a>
+                    </div>
+                    <div class="d-flex flex-row options">
+                        <a href="">Settings</a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-column" style="width: 80%;padding: 4em">
+                <div class="d-flex flex-row justify-content-around">
+                    <div class="d-flex flex-row align-items-center">
+                        <img th:src="@{/images/project.png}" style="height: 80%" alt="">
+                        <div class="d-flex flex-column">
+                            <span style="margin-left: 0.5em;font-size: 20px;font-weight: bold;">Workspace Name</span>
+                            <span style="margin-left: 0.7em;font-size: 14px;font-weight: 300;color: gray;">Private</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row">
+                        <button class="btn btn-primary">
+                            Add member
+                        </button>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex flex-column" style="padding: 1em;">
+                    <div style="font-size: 18px; margin-bottom: 1em;font-weight: bold;">Boards</div>
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-column">
+                            <span style="font-size: 13px;font-weight: bold;margin-bottom: 0.5em;color:dimgray;">Sort by</span>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <span style="font-size: 13px;font-weight: bold;margin-bottom: 0.5em;color:dimgray;">Search</span>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+                                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="row row-cols-3">
+                            <div class="col">
+                                <div class="boards new-board text-truncate bg-secondary shadow-sm">
+                                    <div class="d-flex flex-column align-items-center text-white">
+                                        <span>Create a board</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="boards text-truncate shadow-sm">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span class="board_name">Board Name</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="boards text-truncate shadow-sm">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span class="board_name">Board name</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="boards text-truncate shadow-sm">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span class="board_name">Board name</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+</body>
+</html>

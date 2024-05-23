@@ -1,0 +1,36 @@
+.options {
+    padding: 0.5em;
+    border-radius: 5px;
+}
+
+.options a {
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.options:hover {
+    background-color: #6c757d;
+}
+
+.options:hover a{
+    color:white;
+}
+
+.boards {
+    border-style: solid;
+    border-radius: 5px;
+    padding: 3em;
+    border-width: 1px;
+    margin-bottom: 2em;
+    border-color: rgb(108 117 125);
+}
+
+
+.new-board {
+    border-color: rgb(108 117 125);
+}
+
+.board_name {
+    font-size: 17px;
+    font-weight: bold;
+}
