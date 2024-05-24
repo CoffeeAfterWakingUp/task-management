@@ -9,7 +9,7 @@
 }
 
 .options:hover {
-    background-color: #6c757d;
+    background-color: #0a53be;
 }
 
 .options:hover a{
@@ -21,7 +21,7 @@
     border-radius: 5px;
     padding: 3em;
     border-width: 1px;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
     border-color: rgb(108 117 125);
 }
 
@@ -34,3 +34,22 @@
     font-size: 17px;
     font-weight: bold;
 }
+
+.add-task button {
+    color:gray;
+    font-size: 15px;
+}
+
+.add-task:hover {
+    background-color: dimgray;
+}
+
+.add-task:hover button {
+    color:white;
+}
+
+/*.stage-placeholder {*/
+/*    height: 100px;*/
+/*    width: 100px;*/
+/*    border-style: dashed;*/
+/*}*/

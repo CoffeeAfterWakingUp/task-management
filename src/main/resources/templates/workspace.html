@@ -15,39 +15,9 @@
 <main class="w-100 m-auto">
     <div class="">
         <div class="d-flex flex-row" style="min-height: 100vh;">
-            <div class="d-flex flex-column bg-light border-end" style="width: 20%;padding: 1em;">
-                <div class="d-flex flex-row align-items-center">
-                    <img th:src="@{/images/project.png}" style="height: 65%" alt="">
-                    <span style="margin-left: 0.5em;font-size: 17px;font-weight: bold;">Workspace Name</span>
-                </div>
-                <hr>
-                <div class="d-flex flex-column">
-                    <div class="d-flex flex-row options">
-                        <a href="">Boards</a>
-                    </div>
-                    <div class="d-flex flex-row options">
-                        <a href="">Members</a>
-                    </div>
-                    <div class="d-flex flex-row options">
-                        <a href="">Settings</a>
-                    </div>
-                </div>
-            </div>
+            <div th:replace="~{fragments/sidebar.html :: sidebar}"></div>
             <div class="d-flex flex-column" style="width: 80%;padding: 4em">
-                <div class="d-flex flex-row justify-content-around">
-                    <div class="d-flex flex-row align-items-center">
-                        <img th:src="@{/images/project.png}" style="height: 80%" alt="">
-                        <div class="d-flex flex-column">
-                            <span style="margin-left: 0.5em;font-size: 20px;font-weight: bold;">Workspace Name</span>
-                            <span style="margin-left: 0.7em;font-size: 14px;font-weight: 300;color: gray;">Private</span>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row">
-                        <button class="btn btn-primary">
-                            Add member
-                        </button>
-                    </div>
-                </div>
+                <div th:replace="~{fragments/workspace-header.html :: workspace-header}"></div>
                 <hr>
                 <div class="d-flex flex-column" style="padding: 1em;">
                     <div style="font-size: 18px; margin-bottom: 1em;font-weight: bold;">Boards</div>
@@ -65,41 +35,167 @@
                             <span style="font-size: 13px;font-weight: bold;margin-bottom: 0.5em;color:dimgray;">Search</span>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon2">Search</button>
+                                <button class="btn btn-primary" type="button" id="button-addon2">
+                                    <img th:src="@{/svg/magnifying-glass-solid.svg}" style="height: 15px;" alt="">
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="">
-                        <div class="row row-cols-3">
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
                             <div class="col">
-                                <div class="boards new-board text-truncate bg-secondary shadow-sm">
-                                    <div class="d-flex flex-column align-items-center text-white">
-                                        <span>Create a board</span>
+                                <button type="button" class="card h-100 w-100 bg-primary d-flex align-items-center justify-content-center" style="min-height: 100px;" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <img th:src="@{/svg/plus-solid.svg}" style="height: 30px;" alt="">
+                                </button>
+                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <div class="d-flex" style="padding: 1em;">
+                                                <div class="d-flex flex-grow-1 justify-content-center">
+                                                    <span class="modal-title" id="exampleModalLabel" style="font-size: 15px;">Создать доску</span>
+                                                </div>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="font-size: 13px;"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="">
+                                                    <div class="">
+                                                        <label for="exampleFormControlInput1" class="form-label" style="font-size: 14px;color:dimgray;">Заголовок доски</label>
+                                                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                                                    </div>
+                                                    <div style="margin-top: 1em;">
+                                                        <label for="exampleFormControlInput1" class="form-label" style="font-size: 14px;color:dimgray;">Видимость доски</label>
+                                                        <select class="form-select" aria-label="Default select example">
+                                                            <option selected>Open this select menu</option>
+                                                            <option value="1">One</option>
+                                                            <option value="2">Two</option>
+                                                            <option value="3">Three</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="d-flex flex-row" style="margin-top: 2em;">
+                                                        <button class="btn btn-primary flex-grow-1">Создать</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="boards text-truncate shadow-sm">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span class="board_name">Board Name</span>
+                                <a class="card h-100" href="#" style="min-height: 100px;text-decoration: none;">
+                                    <div class="card-body">
+                                        <span class="card-title" style="font-size: 18px;font-weight: bold;">Card title</span>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-flex flex-row justify-content-evenly">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/user-solid (2).svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20</small>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/list-solid.svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20</small>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/calendar-days-solid.svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20 April 2024</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <div class="card h-100" style="min-height: 100px;">
+                                    <div class="card-body">
+                                        <span class="card-title" style="font-size: 18px;font-weight: bold;">Card title</span>
+                                        <p class="card-text" style="font-size: 14px;color: gray;">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-flex flex-row justify-content-evenly">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/user-solid (2).svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20</small>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/list-solid.svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20</small>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/calendar-days-solid.svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20 April 2024</small>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="boards text-truncate shadow-sm">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span class="board_name">Board name</span>
+                                <div class="card h-100" style="min-height: 100px;">
+                                    <div class="card-body">
+                                        <span class="card-title" style="font-size: 18px;font-weight: bold;">Card title</span>
+                                        <p class="card-text" style="font-size: 14px;color: gray;">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-flex flex-row justify-content-evenly">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/user-solid (2).svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20</small>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/list-solid.svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20</small>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/calendar-days-solid.svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20 April 2024</small>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="boards text-truncate shadow-sm">
-                                    <div class="d-flex flex-column align-items-center">
-                                        <span class="board_name">Board name</span>
+                                <div class="card h-100" style="min-height: 100px;">
+                                    <div class="card-body">
+                                        <span class="card-title" style="font-size: 18px;font-weight: bold;">Card title</span>
+                                        <p class="card-text" style="font-size: 14px;color: gray;">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="d-flex flex-row justify-content-evenly">
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/user-solid (2).svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20</small>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/list-solid.svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20</small>
+                                            </div>
+                                            <div class="d-flex flex-row align-items-center">
+                                                <img th:src="@{/svg/calendar-days-solid.svg}" style="height: 13px;margin-right: 5px;" alt="">
+                                                <small class="text-body-secondary">20 April 2024</small>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center justify-content-center" style="margin-top: 2em;">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
