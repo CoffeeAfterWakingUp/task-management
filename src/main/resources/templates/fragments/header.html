@@ -1,50 +1,71 @@
-<div class="navbar-light bg-light border-bottom"  xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+<div class="navbar-light bg-light border-bottom" xmlns:th="http://www.thymeleaf.org" th:fragment="header"
+     xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="d-flex flex-row justify-content-between" style="margin-left: 1em;margin-right: 1em;">
         <div class="d-flex">
             <img th:src="@{/svg/logo.svg}" alt="Logo" width="40" height="40" class="">
             <ul class="nav" style="margin-left: 2em;">
                 <li class="nav-item dropdown d-flex align-items-center">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
                         Dropdown
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Action</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown d-flex align-items-center">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
                         Dropdown
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Action</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown d-flex align-items-center">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
                         Dropdown
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Action</a></li>
                         <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
                         <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown d-flex align-items-center">
-                    <a class="btn btn-primary btn-sm" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="width: 4em;">
+                    <a class="btn btn-primary btn-sm" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false" style="width: 4em;">
                         <img th:src="@{/svg/plus-solid.svg}" style="height: 15px;" alt="">
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item d-flex flex-row align-items-center" href="#">
+                            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#createBoardModal">
+                                <img th:src="@{/svg/table-list-solid.svg}" alt=""
+                                     style="height: 15px;margin-right: 0.5em;">
+                                <span>Создать доску</span>
+                            </button>
+                        </a></li>
+                        <li><a class="dropdown-item d-flex flex-row align-items-center">
+                            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#createWorkspaceModal">
+                                <img th:src="@{/svg/table-list-solid.svg}" alt="" style="height: 15px;margin-right: 0.5em;">
+                                <span>Создать рабочее пространство</span>
+                            </button>
+                        </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -52,14 +73,25 @@
         <div class="d-flex">
             <ul class="nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Username
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        <span sec:authorize="isAuthenticated()">
+                            <span th:if="${session.containsKey('CUR_USER')}" th:text="${session.CUR_USER.fullName}">Username</span>
+                        </span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li>
+                            <a class="dropdown-item" href="#">
+                                <span>Создать доску</span>
+                                <p>Доска представляет собой совокупность карточек, упорядоченных в списках. Используйте
+                                    её для управления проектом, отслеживания или организации чего угодно.</p>
+                            </a>
+                        </li>
+                        <li><a class="dropdown-item" href="#">
+                            <span>Создать доску</span>
+                            <p>Доска представляет собой совокупность карточек, упорядоченных в списках. Используйте её
+                                для управления проектом, отслеживания или организации чего угодно.</p>
+                        </a></li>
                     </ul>
                 </li>
             </ul>

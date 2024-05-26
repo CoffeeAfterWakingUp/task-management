@@ -1,8 +1,9 @@
 package kz.bitlab.taskmanagement.rest;
 
 import kz.bitlab.taskmanagement.dto.ApiResponse;
-import kz.bitlab.taskmanagement.dto.RegisterDTO;
-import kz.bitlab.taskmanagement.service.AuthService;
+import kz.bitlab.taskmanagement.dto.CreateWorkspaceDTO;
+import kz.bitlab.taskmanagement.dto.WorkspaceDTO;
+import kz.bitlab.taskmanagement.rest.adapter.WorkspaceAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -12,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/workspaces")
 @RequiredArgsConstructor
-public class AuthRestController {
+public class WorkspaceRestController {
 
-    private final AuthService authService;
+    private final WorkspaceAdapter workspaceAdapter;
 
-    @PostMapping("/register")
-    public ResponseEntity<ApiResponse<String>> register(@RequestBody RegisterDTO registerDTO) {
-        ApiResponse<String> apiResponse = authService.register(registerDTO);
+    @PostMapping
+    public ResponseEntity<ApiResponse<WorkspaceDTO>> create(@RequestBody CreateWorkspaceDTO createWorkspaceDTO) {
+        ApiResponse<WorkspaceDTO> apiResponse = workspaceAdapter.create(createWorkspaceDTO);
         return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiResponse.getStatus()));
     }
 

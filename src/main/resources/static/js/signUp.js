@@ -9,7 +9,7 @@ $(document).ready(function () {
             rePassword: $("#password2").val()
         };
 
-        $("#errorMsg").hide();
+        $("#msg").hide();
         $("#signUp").html("Loading...");
 
         $.ajax({

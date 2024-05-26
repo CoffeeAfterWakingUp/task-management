@@ -1,0 +1,71 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="modals">
+    <div class="modal fade" id="createBoardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="d-flex" style="padding: 1em;">
+                    <div class="d-flex flex-grow-1 justify-content-center">
+                        <span class="modal-title" id="exampleModalLabel" style="font-size: 15px;">Create a board</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="font-size: 13px;"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="">
+                            <label for="exampleFormControlInput1" class="form-label"
+                                   style="font-size: 14px;color:dimgray;">Заголовок
+                                доски</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1"
+                                   placeholder="name@example.com">
+                        </div>
+                        <div style="margin-top: 1em;">
+                            <label for="exampleFormControlInput1" class="form-label"
+                                   style="font-size: 14px;color:dimgray;">Видимость
+                                доски</label>
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-row" style="margin-top: 2em;">
+                            <button class="btn btn-primary flex-grow-1">Создать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="createWorkspaceModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="d-flex" style="padding: 1em;">
+                    <div class="d-flex flex-grow-1 justify-content-center">
+                        <span class="modal-title" style="font-size: 15px;">Создать рабочее пространство</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="font-size: 13px;"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createWorkspaceForm" method="post">
+                        <p id="msg" style="color: red;"></p>
+                        <div class="">
+                            <label for="exampleFormControlInput1" class="form-label"
+                                   style="font-size: 14px;color:dimgray;">Название рабочего пространства<span style="color:red">*</span></label>
+                            <input type="text" class="form-control" placeholder="Компания Kaspi" id="workspaceName">
+                        </div>
+                        <div style="margin-top: 1em;">
+                            <label for="exampleFormControlInput1" class="form-label"
+                                   style="font-size: 14px;color:dimgray;">Описание рабочего пространства</label>
+                            <textarea class="form-control" aria-label="With textarea" placeholder="Расскажите участникам немного о рабочем пространстве." id="workspaceInfo"></textarea>
+                        </div>
+                        <div class="d-flex flex-row" style="margin-top: 2em;">
+                            <button class="btn btn-primary flex-grow-1" id="createWorkspaceBtn" type="submit">Создать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
