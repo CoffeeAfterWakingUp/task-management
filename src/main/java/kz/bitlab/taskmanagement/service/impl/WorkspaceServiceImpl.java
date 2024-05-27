@@ -1,9 +1,9 @@
 package kz.bitlab.taskmanagement.service.impl;
 
 import kz.bitlab.taskmanagement.dto.CreateWorkspaceDTO;
-import kz.bitlab.taskmanagement.dto.WorkspaceDTO;
 import kz.bitlab.taskmanagement.entity.Workspace;
 import kz.bitlab.taskmanagement.exception.BadRequestException;
+import kz.bitlab.taskmanagement.exception.NotFoundException;
 import kz.bitlab.taskmanagement.mapper.WorkspaceMapper;
 import kz.bitlab.taskmanagement.repository.WorkspaceRepository;
 import kz.bitlab.taskmanagement.service.WorkspaceService;
@@ -11,6 +11,7 @@ import kz.bitlab.taskmanagement.util.PropertiesReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Properties;
 
 @Service
@@ -23,7 +24,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     private final WorkspaceMapper workspaceMapper;
 
     @Override
-    public WorkspaceDTO create(CreateWorkspaceDTO createWorkspaceDTO) {
+    public Workspace create(CreateWorkspaceDTO createWorkspaceDTO) {
         if (createWorkspaceDTO == null) {
             throw new BadRequestException(PROPERTIES.getProperty("error.checkData"));
         }
@@ -33,7 +34,18 @@ public class WorkspaceServiceImpl implements WorkspaceService {
             throw new BadRequestException(PROPERTIES.getProperty("error.workspaceTitleIsEmpty"));
         }
         Workspace workspace = workspaceMapper.toEntity(createWorkspaceDTO);
-        Workspace newWorkspace = workspaceRepository.save(workspace);
-        return workspaceMapper.toDTO(newWorkspace);
+        return workspaceRepository.save(workspace);
+    }
+
+    @Override
+    public Workspace getById(Long id) {
+        if (id == null) {
+            throw new BadRequestException(PROPERTIES.getProperty("error.checkData"));
+        }
+        Optional<Workspace> workspaceOpt = workspaceRepository.findById(id);
+        if (workspaceOpt.isEmpty()) {
+            throw new NotFoundException("Workspace not found!");
+        }
+        return workspaceOpt.get();
     }
 }

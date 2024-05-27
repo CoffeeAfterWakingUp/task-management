@@ -5,18 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WorkspaceDTO {
+public class CreateBoardDTO {
 
-    private Long id;
     private String title;
     private String description;
-    private List<BoardDTO> boards;
-
-
+    private String boardVisibility;
+    private String workspaceId;
 }

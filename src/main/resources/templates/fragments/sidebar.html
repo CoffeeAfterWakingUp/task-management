@@ -2,7 +2,7 @@
      xmlns:th="http://www.thymeleaf.org" th:fragment="sidebar">
     <div class="d-flex flex-row align-items-center">
         <img th:src="@{/images/project.png}" style="height: 65%" alt="">
-        <span style="margin-left: 0.5em;font-size: 17px;font-weight: bold;">Workspace Name</span>
+        <span style="margin-left: 0.5em;font-size: 17px;font-weight: bold;" th:text="${workspace} ? ${workspace.title} : ''">Workspace Name</span>
     </div>
     <hr>
     <div class="d-flex flex-column">

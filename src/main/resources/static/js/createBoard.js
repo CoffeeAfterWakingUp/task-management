@@ -1,30 +1,32 @@
 $(document).ready(function () {
-    $("#createWorkspaceForm").on("submit", function (event) {
+    $("#createBoardForm").on("submit", function (event) {
         event.preventDefault();
+        let workspaceId = $("#workspaceId").val();
+        console.log(workspaceId);
         let dto = {
-            title: $("#workspaceName").val(),
-            description: $("#workspaceInfo").val()
+            title: $("#boardName").val(),
+            description: $("#boardDescription").val(),
+            boardVisibility: $("#boardVisibility").val(),
+            workspaceId: workspaceId
         };
 
         $("#msg").hide();
-        $("#createWorkspaceBtn").html("Loading...");
+        $("#createBoardBtn").html("Loading...");
 
         $.ajax({
-            url: '/api/v1/workspaces',
+            url: '/api/v1/boards',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(dto),
             success: function(response) {
-                $("#workspaceName").val("");
-                $("#workspaceInfo").val("");
                 $("#createWorkspaceBtn").html("Создать");
                 console.log('Data sent successfully:', response.body);
-                window.location.href = '/workspaces/' + response.body.id + '/boards';
+                window.location.href = '/workspaces/' + workspaceId + '/boards';
             },
             error: function(error) {
                 $("#msg").html(error.responseJSON.errorMsg);
                 $("#msg").show();
-                $("#createWorkspaceBtn").html("Создать");
+                $("#createBoardBtn").html("Создать");
                 console.error('Error sending data:', error.responseJSON);
             }
         });

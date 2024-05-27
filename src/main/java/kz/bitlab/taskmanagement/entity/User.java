@@ -10,7 +10,6 @@ import java.util.Set;
 @Getter
 @Entity
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "user")
 public class User {
@@ -47,5 +46,9 @@ public class User {
                 ", password='" + password + '\'' +
                 ", registerTime=" + registerTime +
                 '}';
+    }
+
+    public User() {
+        this.registerTime = LocalDateTime.now();
     }
 }

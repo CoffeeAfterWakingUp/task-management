@@ -2,7 +2,7 @@
     <div class="d-flex flex-row align-items-center">
         <img th:src="@{/images/project.png}" style="height: 80%" alt="">
         <div class="d-flex flex-column">
-            <span style="margin-left: 0.5em;font-size: 20px;font-weight: bold;">Workspace Name</span>
+            <span style="margin-left: 0.5em;font-size: 20px;font-weight: bold;" th:text="${workspace} ? ${workspace.title} : ''">Workspace Name</span>
             <span style="margin-left: 0.7em;font-size: 14px;font-weight: 300;color: gray;">Private</span>
         </div>
     </div>

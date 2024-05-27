@@ -1,9 +1,9 @@
 package kz.bitlab.taskmanagement.rest;
 
+import kz.bitlab.taskmanagement.adapter.BoardAdapter;
 import kz.bitlab.taskmanagement.dto.ApiResponse;
-import kz.bitlab.taskmanagement.dto.CreateWorkspaceDTO;
-import kz.bitlab.taskmanagement.dto.WorkspaceDTO;
-import kz.bitlab.taskmanagement.adapter.WorkspaceAdapter;
+import kz.bitlab.taskmanagement.dto.BoardDTO;
+import kz.bitlab.taskmanagement.dto.CreateBoardDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/workspaces")
+@RequestMapping("/api/v1/boards")
 @RequiredArgsConstructor
-public class WorkspaceRestController {
+public class BoardRestController {
 
-    private final WorkspaceAdapter workspaceAdapter;
+    private final BoardAdapter boardAdapter;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<WorkspaceDTO>> create(@RequestBody CreateWorkspaceDTO createWorkspaceDTO) {
-        ApiResponse<WorkspaceDTO> apiResponse = workspaceAdapter.create(createWorkspaceDTO);
+    public ResponseEntity<ApiResponse<BoardDTO>> create(@RequestBody CreateBoardDTO createBoardDTO) {
+        ApiResponse<BoardDTO> apiResponse = boardAdapter.createBoard(createBoardDTO);
         return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiResponse.getStatus()));
     }
-
 }
