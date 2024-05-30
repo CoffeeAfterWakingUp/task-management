@@ -11,6 +11,7 @@ import kz.bitlab.taskmanagement.service.BoardService;
 import kz.bitlab.taskmanagement.service.WorkspaceService;
 import kz.bitlab.taskmanagement.util.comparator.SortByCardOrder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,10 +20,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ ={@Lazy})
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
+    @Lazy
     private final WorkspaceService workspaceService;
 
     @Override

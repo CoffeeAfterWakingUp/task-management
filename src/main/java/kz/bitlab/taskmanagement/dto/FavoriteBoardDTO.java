@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddFavoriteBoardDTO {
+public class FavoriteBoardDTO {
 
     private Long boardId;
 

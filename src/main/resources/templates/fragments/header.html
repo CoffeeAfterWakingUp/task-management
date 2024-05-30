@@ -19,7 +19,7 @@
                                 <hr class="dropdown-divider">
                             </li>
                         </th:block>
-                        <th:block th:if="${session.ALL_WORKSPACES != null}">
+                        <th:block th:if="${session.ALL_WORKSPACES != null and session.ALL_WORKSPACES.size() != 0}">
                             <li><span class="dropdown-header" style="font-size: 13px;font-weight: bold;">Ваши рабочие пространства</span>
                             </li>
                             <li
@@ -29,7 +29,7 @@
                                    th:text="${workspace.title}">Action</a>
                             </li>
                         </th:block>
-                        <th:block th:if="${session.CUR_WORKSPACE == null and session.ALL_WORKSPACES == null}">
+                        <th:block th:if="${(session.CUR_WORKSPACE == null and session.ALL_WORKSPACES == null) or session.ALL_WORKSPACES.size() == 0}">
                             <li class="text-center"><span style="font-weight: bold;font-size: 14px;">Ваши рабочие пространства будут отображаться здесь</span></li>
                         </th:block>
                     </ul>
@@ -40,7 +40,7 @@
                         Недавние
                     </a>
                     <ul class="dropdown-menu">
-                        <th:block th:if="${session.RECENT_BOARDS != null}">
+                        <th:block th:if="${session.RECENT_BOARDS != null and session.RECENT_BOARDS.size() != 0}">
                             <li><span class="dropdown-header" style="font-size: 13px;font-weight: bold;">Недавние</span></li>
                             <li th:each="board : ${session.RECENT_BOARDS}">
                                 <a class="dropdown-item"
@@ -63,12 +63,21 @@
                         В избранном
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <th:block th:if="${session.FAVORITED_BOARDS != null and session.FAVORITED_BOARDS.size != 0}">
+                            <li><span class="dropdown-header" style="font-size: 13px;font-weight: bold;">В избранном</span></li>
+                            <li th:each="board : ${session.FAVORITED_BOARDS}">
+                                <a class="dropdown-item"
+                                   th:href="@{/workspaces/{wId}/boards/{bId}(wId=${board.workspaceId},bId=${board.id})}">
+                                    <span class="d-flex flex-column">
+                                        <span th:text="${board.title}">Board Title</span>
+                                        <small th:text="${board.workspaceTitle}" style="color:gray;">Board Workspace Title</small>
+                                    </span>
+                                </a>
+                            </li>
+                        </th:block>
+                        <th:block th:if="${session.FAVORITED_BOARDS == null or session.FAVORITED_BOARDS.size == 0}">
+                            <li class="text-center"><span style="font-weight: bold;font-size: 14px;">Чтобы быстро находить важные доски, отмечайте их.</span></li>
+                        </th:block>
                     </ul>
                 </li>
                 <li class="nav-item dropdown d-flex align-items-center">

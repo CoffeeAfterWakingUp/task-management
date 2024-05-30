@@ -53,6 +53,11 @@ public class User {
         favoritedUsers.add(this);
     }
 
+    public void removeFavoriteBoard(Board board) {
+        favoriteBoards.remove(board);
+        board.getFavoritedUsers().remove(this);
+    }
+
     @Override
     public String toString() {
         return "User{" +

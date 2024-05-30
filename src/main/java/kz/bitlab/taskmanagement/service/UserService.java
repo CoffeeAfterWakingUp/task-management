@@ -12,5 +12,11 @@ public interface UserService {
 
     Optional<User> create(User user);
 
+    void addFavoriteBoard(String username, Long boardId);
+
+    void removeFavoritedBoard(String username, Long boardId);
+
+    User getById(Long id);
+
 
 }

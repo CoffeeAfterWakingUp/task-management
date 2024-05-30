@@ -10,9 +10,11 @@ import kz.bitlab.taskmanagement.service.BoardMemberService;
 import kz.bitlab.taskmanagement.service.BoardService;
 import kz.bitlab.taskmanagement.service.UserService;
 import kz.bitlab.taskmanagement.util.LongParser;
+import kz.bitlab.taskmanagement.util.ModelAttribute;
 import kz.bitlab.taskmanagement.util.RecentSet;
 import kz.bitlab.taskmanagement.util.SessionAttribute;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -20,9 +22,10 @@ import org.springframework.ui.Model;
 import java.util.Optional;
 
 @Component
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor_ ={@Lazy})
 public class BoardAdapter {
 
+    @Lazy
     private final BoardService boardService;
     private final BoardMapper boardMapper;
     private final BoardMemberService boardMemberService;
@@ -55,6 +58,7 @@ public class BoardAdapter {
         BoardMember boardMember = boardMemberService.getById(board, userOpt.get());
         updateRecentBoards(session, boardDTO);
         model.addAttribute("board", boardDTO);
+        model.addAttribute(ModelAttribute.BOARD_FAVORITED, userOpt.get().getFavoriteBoards().contains(board));
         session.setAttribute(SessionAttribute.CUR_WORKSPACE, workspaceDTO);
         session.setAttribute(SessionAttribute.CUR_USER_BOARD_ROLE, boardMember.getBoardMemberRole().name());
         return "board";

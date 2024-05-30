@@ -16,7 +16,7 @@
 <div th:replace="~{fragments/header.html :: header}"></div>
 <main class="w-100 m-auto" th:if="${board != null}">
     <input type="hidden" id="boardId" th:value="${board.id}">
-    <input type="hidden" id="userId" th:value="${session.CUR_USER.id}">
+    <input type="hidden" id="username" th:value="${session.CUR_USER.username}">
     <div class="">
         <div class="d-flex flex-row" style="min-height: 100vh;">
             <div th:replace="~{fragments/sidebar.html :: sidebar}"></div>
@@ -24,9 +24,14 @@
                 <div class="d-flex flex-row justify-content-between">
                     <div class="d-flex flex-row align-items-center">
                         <span style="margin-left: 0.3em;font-size: 23px;font-weight: bold;" th:text="${board.title}">Board name</span>
-                        <form id="favoriteBoardForm" method="post">
-                            <button class="btn" type="submit" id="favoriteBoardBtn">
-                                <img th:src="@{/svg/star-regular.svg}" style="height: 13px;" alt="" id="favoriteBoardBtnImg">
+                        <form id="favoriteBoardForm" method="post" th:style="${BOARD_FAVORITED ? 'display:none' : 'display:block'}">
+                            <button class="btn" type="submit">
+                                <img th:src="@{/svg/star-regular.svg}" style="height: 13px;" alt="">
+                            </button>
+                        </form>
+                        <form id="unfavoriteBoardForm" method="post" th:style="${!BOARD_FAVORITED ? 'display:none' : 'display:block'}">
+                            <button class="btn" type="submit">
+                                <img th:src="@{/svg/star-solid.svg}" style="height: 13px;" alt="">
                             </button>
                         </form>
                     </div>
@@ -148,5 +153,6 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/board.js}"></script>
 <script type="text/javascript" th:src="@{/js/favoriteBoard.js}"></script>
+<script type="text/javascript" th:src="@{/js/unfavoriteBoard.js}"></script>
 </body>
 </html>

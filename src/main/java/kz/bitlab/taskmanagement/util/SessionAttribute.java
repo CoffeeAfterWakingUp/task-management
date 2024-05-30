@@ -12,4 +12,5 @@ public class SessionAttribute {
     public static final String CUR_USER_WORKSPACE_ROLE = "CUR_USER_WORKSPACE_ROLE";
     public static final String CUR_USER_BOARD_ROLE = "CUR_USER_BOARD_ROLE";
     public static final String RECENT_BOARDS = "RECENT_BOARDS";
+    public static final String FAVORITED_BOARDS = "FAVORITED_BOARDS";
 }

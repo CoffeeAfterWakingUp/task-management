@@ -1,21 +1,20 @@
 $(document).ready(function () {
-    $("#favoriteBoardForm").on("submit", function (event) {
+    $("#unfavoriteBoardForm").on("submit", function (event) {
         event.preventDefault();
         let boardId = $("#boardId").val();
         let username = $("#username").val();
-        console.log(boardId);
         let dto = {
             boardId: boardId
         };
 
         $.ajax({
             url: '/api/v1/users/' + username + '/boards/favorites',
-            type: 'POST',
+            type: 'DELETE',
             contentType: 'application/json',
             data: JSON.stringify(dto),
             success: function(response) {
-                $("#unfavoriteBoardForm").css("display", "block");
-                $("#favoriteBoardForm").css("display", "none");
+                $("#favoriteBoardForm").css("display", "block");
+                $("#unfavoriteBoardForm").css("display", "none");
                 console.log('Data sent successfully:', response.body);
             },
             error: function(error) {
