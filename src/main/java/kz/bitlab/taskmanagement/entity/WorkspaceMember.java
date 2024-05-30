@@ -3,14 +3,12 @@ package kz.bitlab.taskmanagement.entity;
 import jakarta.persistence.*;
 import kz.bitlab.taskmanagement.entity.key.WorkspaceMemberKey;
 import kz.bitlab.taskmanagement.enums.WorkspaceMemberRole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkspaceMember {
@@ -28,8 +26,8 @@ public class WorkspaceMember {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "member_role", nullable = false)
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "member_role", nullable = false)
     private WorkspaceMemberRole memberRole;
 
 }

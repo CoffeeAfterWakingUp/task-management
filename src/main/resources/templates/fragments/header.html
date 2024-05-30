@@ -7,35 +7,60 @@
                 <li class="nav-item dropdown d-flex align-items-center">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Dropdown
+                        Ваши рабочие пространства
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <th:block th:if="${session.CUR_WORKSPACE != null}">
+                            <li><span class="dropdown-header" style="font-size: 13px;font-weight: bold;">Текущее рабочее пространство</span></li>
+                            <li><a class="dropdown-item"
+                                   th:href="@{/workspaces/{id}/boards(id=${session.CUR_WORKSPACE.id})}"
+                                   th:text="${session.CUR_WORKSPACE.title}">Action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                        </th:block>
+                        <th:block th:if="${session.ALL_WORKSPACES != null}">
+                            <li><span class="dropdown-header" style="font-size: 13px;font-weight: bold;">Ваши рабочие пространства</span>
+                            </li>
+                            <li
+                                    th:each="workspace : ${session.ALL_WORKSPACES}">
+                                <a class="dropdown-item"
+                                   th:href="@{/workspaces/{id}/boards(id=${workspace.id})}"
+                                   th:text="${workspace.title}">Action</a>
+                            </li>
+                        </th:block>
+                        <th:block th:if="${session.CUR_WORKSPACE == null and session.ALL_WORKSPACES == null}">
+                            <li class="text-center"><span style="font-weight: bold;font-size: 14px;">Ваши рабочие пространства будут отображаться здесь</span></li>
+                        </th:block>
                     </ul>
                 </li>
                 <li class="nav-item dropdown d-flex align-items-center">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Dropdown
+                        Недавние
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <th:block th:if="${session.RECENT_BOARDS != null}">
+                            <li><span class="dropdown-header" style="font-size: 13px;font-weight: bold;">Недавние</span></li>
+                            <li th:each="board : ${session.RECENT_BOARDS}">
+                                <a class="dropdown-item"
+                                   th:href="@{/workspaces/{wId}/boards/{bId}(wId=${board.workspaceId},bId=${board.id})}">
+                                    <span class="d-flex flex-column">
+                                        <span th:text="${board.title}">Board Title</span>
+                                        <small th:text="${board.workspaceTitle}" style="color:gray;">Board Workspace Title</small>
+                                    </span>
+                                </a>
+                            </li>
+                        </th:block>
+                        <th:block th:if="${session.RECENT_BOARDS == null}">
+                            <li class="text-center"><span style="font-weight: bold;font-size: 14px;">Недавние доски будут отображаться здесь</span></li>
+                        </th:block>
                     </ul>
                 </li>
                 <li class="nav-item dropdown d-flex align-items-center">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
-                        Dropdown
+                        В избранном
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Action</a></li>
@@ -60,8 +85,10 @@
                             </button>
                         </a></li>
                         <li><a class="dropdown-item d-flex flex-row align-items-center">
-                            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#createWorkspaceModal">
-                                <img th:src="@{/svg/table-list-solid.svg}" alt="" style="height: 15px;margin-right: 0.5em;">
+                            <button class="btn" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#createWorkspaceModal">
+                                <img th:src="@{/svg/table-list-solid.svg}" alt=""
+                                     style="height: 15px;margin-right: 0.5em;">
                                 <span>Создать рабочее пространство</span>
                             </button>
                         </a>
@@ -72,26 +99,27 @@
         </div>
         <div class="d-flex">
             <ul class="nav">
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown" th:if="${session.CUR_USER != null}">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
                         <span sec:authorize="isAuthenticated()">
-                            <span th:if="${session.containsKey('CUR_USER')}" th:text="${session.CUR_USER.fullName}">Username</span>
+                            <span th:text="${session.CUR_USER.fullName}">Username</span>
                         </span>
                     </a>
                     <ul class="dropdown-menu">
+                        <li><span class="dropdown-header"
+                                  style="font-size: 13px;font-weight: bold;">УЧЕТНАЯ ЗАПИСЬ</span>
                         <li>
-                            <a class="dropdown-item" href="#">
-                                <span>Создать доску</span>
-                                <p>Доска представляет собой совокупность карточек, упорядоченных в списках. Используйте
-                                    её для управления проектом, отслеживания или организации чего угодно.</p>
-                            </a>
+                            <span class="dropdown-item d-flex flex-row">
+                                <img th:src="@{/svg/circle-user-solid.svg}" alt="" style="width: 35px;margin-right: 0.5em;">
+                            <span class="d-flex flex-column">
+                                <span style="max-width: 100px;" class="text-truncate" th:text="${session.CUR_USER.username}">Username</span>
+                                <small th:text="${session.CUR_USER.email}" style="color:gray;">Email</small>
+                            </span>
+                            </span>
                         </li>
-                        <li><a class="dropdown-item" href="#">
-                            <span>Создать доску</span>
-                            <p>Доска представляет собой совокупность карточек, упорядоченных в списках. Используйте её
-                                для управления проектом, отслеживания или организации чего угодно.</p>
-                        </a></li>
+                        <li><a class="dropdown-item" href="#">Профиль</a></li>
+                        <li><a class="dropdown-item" th:href="@{/logout}">Выйти</a></li>
                     </ul>
                 </li>
             </ul>

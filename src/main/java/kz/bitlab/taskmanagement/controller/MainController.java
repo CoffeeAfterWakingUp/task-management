@@ -2,12 +2,11 @@ package kz.bitlab.taskmanagement.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kz.bitlab.taskmanagement.dto.UserDTO;
-import kz.bitlab.taskmanagement.service.UserService;
-import kz.bitlab.taskmanagement.util.SessionAttribute;
+import kz.bitlab.taskmanagement.adapter.MainAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -16,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MainController {
 
-    private final UserService userService;
+    private final MainAdapter mainAdapter;
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public String mainPage(HttpServletRequest request) {
+    public String mainPage(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
-        UserDTO userDTO = (UserDTO) session.getAttribute(SessionAttribute.CUR_USER);
-        return "main";
+        return mainAdapter.mainPage(session, model);
     }
 }

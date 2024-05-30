@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,6 +32,6 @@ public class Workspace {
     private List<Board> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "workspace")
-    private Set<WorkspaceMember> members;
+    private Set<WorkspaceMember> members = new HashSet<>();
 
 }

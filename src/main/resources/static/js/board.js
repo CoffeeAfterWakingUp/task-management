@@ -6,10 +6,7 @@ $(document).ready(function () {
             console.log(ui);
         }
     });
-});
-
-$(document).ready(function () {
-    $(".row").sortable({
+    $(".scroll").sortable({
         receive: function( event, ui ) {
             console.log(event);
             console.log(ui);

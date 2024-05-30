@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -19,4 +20,8 @@ public class BoardDTO {
     private int membersCount;
     private int cardsCount;
     private LocalDateTime createdTime;
+    private String boardVisibility;
+    private List<CardDTO> cards;
+    private Long workspaceId;
+    private String workspaceTitle;
 }

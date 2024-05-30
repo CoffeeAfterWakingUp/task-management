@@ -3,14 +3,12 @@ package kz.bitlab.taskmanagement.entity;
 import jakarta.persistence.*;
 import kz.bitlab.taskmanagement.entity.key.BoardMemberKey;
 import kz.bitlab.taskmanagement.enums.BoardMemberRole;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardMember {

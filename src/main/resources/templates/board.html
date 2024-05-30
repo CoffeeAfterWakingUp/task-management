@@ -14,22 +14,26 @@
 </head>
 <body>
 <div th:replace="~{fragments/header.html :: header}"></div>
-<main class="w-100 m-auto">
+<main class="w-100 m-auto" th:if="${board != null}">
+    <input type="hidden" id="boardId" th:value="${board.id}">
+    <input type="hidden" id="userId" th:value="${session.CUR_USER.id}">
     <div class="">
         <div class="d-flex flex-row" style="min-height: 100vh;">
             <div th:replace="~{fragments/sidebar.html :: sidebar}"></div>
             <div class="d-flex flex-column" style="width: 80%;padding: 4em">
                 <div class="d-flex flex-row justify-content-between">
                     <div class="d-flex flex-row align-items-center">
-                        <span style="margin-left: 0.3em;font-size: 23px;font-weight: bold;">Board name</span>
-                        <button class="btn">
-                            <img th:src="@{/svg/star-regular.svg}" style="height: 13px;" alt="">
-                        </button>
+                        <span style="margin-left: 0.3em;font-size: 23px;font-weight: bold;" th:text="${board.title}">Board name</span>
+                        <form id="favoriteBoardForm" method="post">
+                            <button class="btn" type="submit" id="favoriteBoardBtn">
+                                <img th:src="@{/svg/star-regular.svg}" style="height: 13px;" alt="" id="favoriteBoardBtnImg">
+                            </button>
+                        </form>
                     </div>
                     <div class="d-flex flex-row align-items-center">
                         <button class="btn btn-primary"><img th:src="@{/svg/plus-solid.svg}" style="height: 15px;"
                                                              alt=""></button>
-                        <button class="btn btn-primary" style="margin-left: 0.5em;"><img
+                        <button class="btn btn-primary" style="margin-left: 0.5em;" th:if="${session.CUR_USER_BOARD_ROLE == 'BOARD_ADMIN'}"><img
                                 th:src="@{/svg/user-plus-solid-white.svg}" style="height: 15px;" alt=""></button>
                     </div>
 
@@ -42,13 +46,13 @@
                     <div class="horizontal-scrollable">
                         <div class="">
                             <div class="scroll">
-                                <div class="card" >
+                                <div class="card" th:each="card: ${board.cards}">
                                     <div class="card-body">
                                         <div class="d-flex flex-column">
                                             <div class="d-flex flex-row">
                                                 <div class="d-flex flex-column">
                                                         <span class="card-title"
-                                                              style="font-size: 15px;font-weight: bold;color: dimgray">Card title</span>
+                                                              style="font-size: 15px;font-weight: bold;color: dimgray" th:text="${card.title}">Card title</span>
                                                 </div>
                                             </div>
                                             <div class="d-flex flex-column tasks" data-stage-id="1">
@@ -79,232 +83,7 @@
                                                     <div class="d-flex flex-grow-1 justify-content-center add-task"
                                                          style="border-radius: 5px;">
                                                         <button class="btn" type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#exampleModal">Добавить карточку
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card"   >
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex flex-row">
-                                                <div class="d-flex flex-column">
-                                                        <span class="card-title"
-                                                              style="font-size: 15px;font-weight: bold;color: dimgray">Card title</span>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column tasks" data-stage-id="1">
-                                                <div class="d-flex flex-column shadow-sm border task" data-task-id="1"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                </div>
-                                                <div class="d-flex flex-column shadow-sm border task"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                    <div class="d-flex flex-row mt-2">
-                                                        <span class="bg-info p-1"
-                                                              style="font-size: 13px;border-radius: 5px;">Syrbek Olzhas</span>
-                                                        <span class="bg-warning p-1"
-                                                              style="font-size: 13px;border-radius: 5px;margin-left: 5px;">25 мая</span>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex flex-column task"
-                                                     style="border-radius: 5px;margin-top: 0.5em;">
-                                                    <div class="d-flex flex-grow-1 justify-content-center add-task"
-                                                         style="border-radius: 5px;">
-                                                        <button class="btn" type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#exampleModal">Добавить карточку
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex flex-row">
-                                                <div class="d-flex flex-column">
-                                                        <span class="card-title"
-                                                              style="font-size: 15px;font-weight: bold;color: dimgray">Card title</span>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column tasks" data-stage-id="1">
-                                                <div class="d-flex flex-column shadow-sm border task" data-task-id="1"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                </div>
-                                                <div class="d-flex flex-column shadow-sm border task"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                    <div class="d-flex flex-row mt-2">
-                                                        <span class="bg-info p-1"
-                                                              style="font-size: 13px;border-radius: 5px;">Syrbek Olzhas</span>
-                                                        <span class="bg-warning p-1"
-                                                              style="font-size: 13px;border-radius: 5px;margin-left: 5px;">25 мая</span>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex flex-column task"
-                                                     style="border-radius: 5px;margin-top: 0.5em;">
-                                                    <div class="d-flex flex-grow-1 justify-content-center add-task"
-                                                         style="border-radius: 5px;">
-                                                        <button class="btn" type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#exampleModal">Добавить карточку
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex flex-row">
-                                                <div class="d-flex flex-column">
-                                                        <span class="card-title"
-                                                              style="font-size: 15px;font-weight: bold;color: dimgray">Card title</span>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column tasks" data-stage-id="1">
-                                                <div class="d-flex flex-column shadow-sm border task" data-task-id="1"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                </div>
-                                                <div class="d-flex flex-column shadow-sm border task"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                    <div class="d-flex flex-row mt-2">
-                                                        <span class="bg-info p-1"
-                                                              style="font-size: 13px;border-radius: 5px;">Syrbek Olzhas</span>
-                                                        <span class="bg-warning p-1"
-                                                              style="font-size: 13px;border-radius: 5px;margin-left: 5px;">25 мая</span>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex flex-column task"
-                                                     style="border-radius: 5px;margin-top: 0.5em;">
-                                                    <div class="d-flex flex-grow-1 justify-content-center add-task"
-                                                         style="border-radius: 5px;">
-                                                        <button class="btn" type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#exampleModal">Добавить карточку
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex flex-row">
-                                                <div class="d-flex flex-column">
-                                                        <span class="card-title"
-                                                              style="font-size: 15px;font-weight: bold;color: dimgray">Card title</span>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column tasks" data-stage-id="1">
-                                                <div class="d-flex flex-column shadow-sm border task" data-task-id="1"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                </div>
-                                                <div class="d-flex flex-column shadow-sm border task"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                    <div class="d-flex flex-row mt-2">
-                                                        <span class="bg-info p-1"
-                                                              style="font-size: 13px;border-radius: 5px;">Syrbek Olzhas</span>
-                                                        <span class="bg-warning p-1"
-                                                              style="font-size: 13px;border-radius: 5px;margin-left: 5px;">25 мая</span>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex flex-column task"
-                                                     style="border-radius: 5px;margin-top: 0.5em;">
-                                                    <div class="d-flex flex-grow-1 justify-content-center add-task"
-                                                         style="border-radius: 5px;">
-                                                        <button class="btn" type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#exampleModal">Добавить карточку
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-column">
-                                            <div class="d-flex flex-row">
-                                                <div class="d-flex flex-column">
-                                                        <span class="card-title"
-                                                              style="font-size: 15px;font-weight: bold;color: dimgray">Card title</span>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex flex-column tasks" data-stage-id="1">
-                                                <div class="d-flex flex-column shadow-sm border task" data-task-id="1"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                </div>
-                                                <div class="d-flex flex-column shadow-sm border task"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                    <div class="d-flex flex-row mt-2">
-                                                        <span class="bg-info p-1"
-                                                              style="font-size: 13px;border-radius: 5px;">Syrbek Olzhas</span>
-                                                        <span class="bg-warning p-1"
-                                                              style="font-size: 13px;border-radius: 5px;margin-left: 5px;">25 мая</span>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex flex-column task"
-                                                     style="border-radius: 5px;margin-top: 0.5em;">
-                                                    <div class="d-flex flex-grow-1 justify-content-center add-task"
-                                                         style="border-radius: 5px;">
-                                                        <button class="btn" type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#exampleModal">Добавить карточку
+                                                                data-bs-target="#exampleModal">Добавить задачу
                                                         </button>
                                                     </div>
                                                 </div>
@@ -368,5 +147,6 @@
         integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/board.js}"></script>
+<script type="text/javascript" th:src="@{/js/favoriteBoard.js}"></script>
 </body>
 </html>

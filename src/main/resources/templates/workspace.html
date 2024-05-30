@@ -85,9 +85,13 @@
                                 </div>
                             </div>
                             <div class="col" th:if="${workspace}" th:each="board: ${workspace.boards}">
-                                <a class="card h-100" href="#" style="min-height: 100px;text-decoration: none;">
+                                <a class="card h-100" th:href="@{/workspaces/{wId}/boards/{bId}(wId=${workspace.id},bId=${board.id})}" style="min-height: 100px;text-decoration: none;">
                                     <div class="card-body">
-                                        <span class="card-title" style="font-size: 18px;font-weight: bold;" th:text="${board.title}">Board title</span>
+                                        <div class="d-flex flex-row align-items-start justify-content-start">
+                                            <span class="card-title" style="font-size: 18px;font-weight: bold;" th:text="${board.title}">Board title</span>
+                                            <span th:if="${board.boardVisibility == 'WORKSPACE'}" style="margin-left: 0.4em;"><img th:src="@{/svg/lock-open-solid.svg}" alt="" style="width: 15px;"></span>
+                                            <span th:if="${board.boardVisibility == 'PRIVATE'}" style="margin-left: 0.4em;"><img th:src="@{/svg/lock-solid.svg}" alt="" style="width: 12px;"></span>
+                                        </div>
                                         <p class="card-text" style="font-size: 14px;color: gray;" th:text="${board.description}">Board Description</p>
                                     </div>
                                     <div class="card-footer">
@@ -137,6 +141,7 @@
 
     </div>
 </main>
+<div th:replace="~{fragments/modals :: modals}"></div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
         crossorigin="anonymous"></script>
@@ -145,5 +150,6 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript" th:src="@{/js/createWorkspace.js}"></script>
 <script type="text/javascript" th:src="@{/js/createBoard.js}"></script>
+<script type="text/javascript" th:src="@{/js/addUserToWorkspace.js}"></script>
 </body>
 </html>

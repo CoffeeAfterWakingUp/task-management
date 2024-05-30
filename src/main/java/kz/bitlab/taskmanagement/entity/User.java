@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Setter
@@ -34,7 +35,23 @@ public class User {
     private LocalDateTime registerTime;
 
     @OneToMany(mappedBy = "user")
-    private Set<WorkspaceMember> workspaces;
+    private Set<WorkspaceMember> workspaces = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorite_boards",
+            joinColumns = @JoinColumn(name = "board_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<Board> favoriteBoards = new HashSet<>();
+
+    public void addFavoriteBoard(Board board) {
+        if (favoriteBoards == null) favoriteBoards = new HashSet<>();
+        favoriteBoards.add(board);
+        Set<User> favoritedUsers = board.getFavoritedUsers();
+        if (favoritedUsers == null) favoritedUsers = new HashSet<>();
+        favoritedUsers.add(this);
+    }
 
     @Override
     public String toString() {

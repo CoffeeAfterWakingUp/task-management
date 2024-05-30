@@ -2,7 +2,7 @@ package kz.bitlab.taskmanagement.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kz.bitlab.taskmanagement.adapter.WorkspaceAdapter;
+import kz.bitlab.taskmanagement.adapter.BoardAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/workspaces")
 @RequiredArgsConstructor
-public class WorkspaceController {
+public class BoardController {
 
-    private final WorkspaceAdapter workspaceAdapter;
-    
-    @GetMapping("/{id}/boards")
+    private final BoardAdapter boardAdapter;
+
+    @GetMapping("/{wId}/boards/{bId}")
     @PreAuthorize("isAuthenticated()")
-    public String getWorkspaceBoards(@PathVariable Long id, Model model, HttpServletRequest request) {
+    public String boardPage(@PathVariable Long wId,
+                            @PathVariable Long bId,
+                            Model model,
+                            HttpServletRequest request) {
         HttpSession session = request.getSession();
-        return workspaceAdapter.getWorkspaceBoards(id, model, session);
+        return boardAdapter.boardPage(wId, bId, model, session);
     }
-    
-    
+
 }

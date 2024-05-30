@@ -1,6 +1,8 @@
 package kz.bitlab.taskmanagement.service.impl;
 
 import kz.bitlab.taskmanagement.entity.User;
+import kz.bitlab.taskmanagement.exception.BadRequestException;
+import kz.bitlab.taskmanagement.exception.NotFoundException;
 import kz.bitlab.taskmanagement.repository.UserRepository;
 import kz.bitlab.taskmanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +38,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Optional<User> getByUsername(String username) {
-        return userRepository.findByUsername(username);
+        if (username == null) {
+            throw new BadRequestException("Username is null");
+        }
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            throw new NotFoundException("User is not found!");
+        }
+        return userOpt;
     }
 
     @Override

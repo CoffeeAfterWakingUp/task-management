@@ -1,6 +1,7 @@
 .options {
     padding: 0.5em;
     border-radius: 5px;
+    text-decoration: none;
 }
 
 .options a {
@@ -10,9 +11,6 @@
 
 .options:hover {
     background-color: #0a53be;
-}
-
-.options:hover a{
     color:white;
 }
 

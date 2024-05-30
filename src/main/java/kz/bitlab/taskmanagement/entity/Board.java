@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -46,7 +47,16 @@ public class Board {
     @OneToMany(mappedBy = "board")
     private Set<BoardMember> members;
 
+    @ManyToMany(mappedBy = "favoriteBoards")
+    private Set<User> favoritedUsers = new HashSet<>();
+
     public Board() {
         this.createdTime = LocalDateTime.now();
+    }
+
+    public void addCard(Card card) {
+        if (cards == null) cards = new ArrayList<>();
+        cards.add(card);
+        card.setBoard(this);
     }
 }
