@@ -9,6 +9,7 @@ import kz.bitlab.taskmanagement.mapper.WorkspaceMapper;
 import kz.bitlab.taskmanagement.service.BoardMemberService;
 import kz.bitlab.taskmanagement.service.BoardService;
 import kz.bitlab.taskmanagement.service.UserService;
+import kz.bitlab.taskmanagement.service.WorkspaceMemberService;
 import kz.bitlab.taskmanagement.util.LongParser;
 import kz.bitlab.taskmanagement.util.ModelAttribute;
 import kz.bitlab.taskmanagement.util.RecentSet;
@@ -31,6 +32,7 @@ public class BoardAdapter {
     private final BoardMemberService boardMemberService;
     private final UserService userService;
     private final WorkspaceMapper workspaceMapper;
+    private final WorkspaceMemberService workspaceMemberService;
 
     public ApiResponse<BoardDTO> createBoard(CreateBoardDTO createBoardDTO, HttpSession session) {
         UserDTO curUser = (UserDTO) session.getAttribute(SessionAttribute.CUR_USER);
@@ -53,6 +55,7 @@ public class BoardAdapter {
         Optional<User> userOpt = userService.getByUsername(curUser.getUsername());
         Board board = boardService.getById(bId);
         Workspace workspace = board.getWorkspace();
+        WorkspaceMember workspaceMember = workspaceMemberService.getById(workspace, userOpt.get());
         WorkspaceDTO workspaceDTO = workspaceMapper.toDTO(workspace);
         BoardDTO boardDTO = boardMapper.toDTO(board);
         BoardMember boardMember = boardMemberService.getById(board, userOpt.get());
@@ -61,6 +64,7 @@ public class BoardAdapter {
         model.addAttribute(ModelAttribute.BOARD_FAVORITED, userOpt.get().getFavoriteBoards().contains(board));
         session.setAttribute(SessionAttribute.CUR_WORKSPACE, workspaceDTO);
         session.setAttribute(SessionAttribute.CUR_USER_BOARD_ROLE, boardMember.getBoardMemberRole().name());
+        session.setAttribute(SessionAttribute.CUR_USER_WORKSPACE_ROLE, workspaceMember.getMemberRole());
         return "board";
     }
 

@@ -28,8 +28,10 @@ public class UserRestController {
 
     @DeleteMapping("/{username}/boards/favorites")
     public ResponseEntity<ApiResponse<Boolean>> removeFavoritedBoard(@PathVariable String username,
-                                                                     @RequestBody FavoriteBoardDTO favoriteBoardDTO) {
-        ApiResponse<Boolean> apiResponse = userAdapter.removeFavoritedBoard(username, favoriteBoardDTO);
+                                                                     @RequestBody FavoriteBoardDTO favoriteBoardDTO,
+                                                                     HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        ApiResponse<Boolean> apiResponse = userAdapter.removeFavoritedBoard(username, favoriteBoardDTO, session);
         return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiResponse.getStatus()));
     }
 }
