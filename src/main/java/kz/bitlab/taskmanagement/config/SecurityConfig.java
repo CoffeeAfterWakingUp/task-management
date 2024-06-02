@@ -26,10 +26,7 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers(
-                                "/login",
-                                "/register",
-                                "/main").permitAll()
+                        .requestMatchers("/login", "/register").permitAll()
                         .requestMatchers(
                                 new AntPathRequestMatcher("/api/**"),
                                 new AntPathRequestMatcher("/error"),
