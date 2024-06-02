@@ -7,6 +7,8 @@ import kz.bitlab.taskmanagement.entity.key.BoardMemberKey;
 import kz.bitlab.taskmanagement.enums.BoardMemberRole;
 import kz.bitlab.taskmanagement.exception.BadRequestException;
 
+import java.util.List;
+
 public interface BoardMemberService {
 
     default BoardMemberKey id(Board board, User user) {
@@ -17,4 +19,6 @@ public interface BoardMemberService {
 
     BoardMember create(Board board, User user, BoardMemberRole boardMemberRole);
     BoardMember getById(Board board, User user);
+    BoardMember getById(Long boardId, String username);
+    List<BoardMember> getUserWorkspaceBoards(String username, Long workspaceId);
 }

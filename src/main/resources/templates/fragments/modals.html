@@ -80,7 +80,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="addPersonForm" method="post">
-                        <p id="msg" style="color: red;"></p>
+                        <p id="addPersonFormMsg" style="color: red;"></p>
                         <div class="d-flex flex-row justify-content-evenly">
                             <input type="hidden" id="workspaceId" th:value="${workspace} ? ${workspace.id} : ''">
                             <div class="">
@@ -91,8 +91,8 @@
                             <div>
                                 <label for="exampleFormControlInput1" class="form-label"
                                        style="font-size: 14px;color:dimgray;">Роль пользователя<span style="color:red">*</span></label>
-                                <select class="form-select" aria-label="Default select example" id="personRole" th:if="${session.WORKSPACE_MEMBER_ROLES != null}">
-                                    <option th:each="m : ${session.WORKSPACE_MEMBER_ROLES}" th:value="${m}" th:text="${m}">One</option>
+                                <select class="form-select" aria-label="Default select example" id="personRole" th:if="${WORKSPACE_MEMBER_ROLES != null}">
+                                    <option th:each="m : ${WORKSPACE_MEMBER_ROLES}" th:value="${m}" th:text="${m}">One</option>
                                 </select>
                             </div>
                         </div>
@@ -100,6 +100,182 @@
                             <button class="btn btn-primary flex-grow-1" id="addPersonBtn" type="submit">Добавить пользователя</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addPersonToBoardModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="d-flex" style="padding: 1em;">
+                    <div class="d-flex flex-grow-1 justify-content-center">
+                        <span class="modal-title" style="font-size: 15px;">Поделиться доской</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="font-size: 13px;"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addPersonToBoardForm" method="post">
+                        <p id="addPersonToBoardFormMsg" style="color: red;"></p>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div class="flex-fill" style="margin-right: 1em;">
+                                <label for="exampleFormControlInput1" class="form-label"
+                                       style="font-size: 14px;color:dimgray;">Имя пользователя<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" placeholder="Имя пользователя" id="addPersonToBoardMember">
+                            </div>
+                            <div class="flex-fill">
+                                <label for="exampleFormControlInput1" class="form-label"
+                                       style="font-size: 14px;color:dimgray;">Роль пользователя<span style="color:red">*</span></label>
+                                <select class="form-select" aria-label="Default select example" id="addPersonToBoardMemberRole" th:if="${BOARD_MEMBER_ROLES != null}">
+                                    <option th:each="m : ${BOARD_MEMBER_ROLES}" th:value="${m}" th:text="${m}">One</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row" style="margin-top: 2em;">
+                            <button class="btn btn-primary flex-grow-1" id="addPersonToBoardBtn" type="submit">Добавить пользователя</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addCardModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="d-flex" style="padding: 1em;">
+                    <div class="d-flex flex-grow-1 justify-content-center">
+                        <span class="modal-title" style="font-size: 15px;">Создать карточку</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="font-size: 13px;"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addCardForm" method="post">
+                        <p id="addCardFormMsg" style="color: red;"></p>
+                        <div class="d-flex flex-row">
+                            <div class="flex-grow-1">
+                                <label for="exampleFormControlInput1" class="form-label"
+                                       style="font-size: 14px;color:dimgray;">Заголовок карточки<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" placeholder="Заголовок карточки" id="cardName">
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row" style="margin-top: 2em;">
+                            <button class="btn btn-primary flex-grow-1" id="addCardBtn" type="submit">Создать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editWorkspaceNameModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="d-flex" style="padding: 1em;">
+                    <div class="d-flex flex-grow-1 justify-content-center">
+                        <span class="modal-title" style="font-size: 15px;">Изменить наименование рабочего пространства</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="font-size: 13px;"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editWorkspaceNameForm" method="post">
+                        <p id="editWorkspaceNameMsg" style="color: red;"></p>
+                        <div class="d-flex flex-row">
+                            <div class="flex-grow-1">
+                                <label for="exampleFormControlInput1" class="form-label"
+                                       style="font-size: 14px;color:dimgray;">Новое наименование<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" placeholder="Новое наименование" id="newWorkspaceName">
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row" style="margin-top: 2em;">
+                            <button class="btn btn-primary flex-grow-1" type="submit">Обновить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="createTaskModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="d-flex" style="padding: 1em;">
+                    <div class="d-flex flex-grow-1 justify-content-center">
+                        <span class="modal-title" style="font-size: 15px;">Создать задачу</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="font-size: 13px;"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="createTaskForm" method="post">
+                        <p id="createTaskFormMsg" style="color: red;"></p>
+                        <div class="d-flex flex-column">
+                            <div class="">
+                                <label for="exampleFormControlInput1" class="form-label" style="font-size: 14px;color:dimgray;">Наименование задачи<span style="color:red">*</span></label>
+                                <input type="text" class="form-control" placeholder="Наименование задачи" id="taskTitle">
+                            </div>
+                            <div class="" style="margin-top: 1em;">
+                                <label for="exampleFormControlInput1" class="form-label" style="font-size: 14px;color:dimgray;">Описание задачи<span style="color:red">*</span></label>
+                                <textarea class="form-control" aria-label="With textarea" placeholder="Описание задачи" id="taskDescription"></textarea>
+                            </div>
+                            <div class="d-flex flex-row justify-content-evenly" style="margin-top: 1em;">
+                                <div>
+                                    <label for="exampleFormControlInput1" class="form-label" style="font-size: 14px;color:dimgray;">Назначить на<span style="color:red">*</span></label>
+                                    <select class="form-select" aria-label="Default select example" id="worker">
+                                        <option th:if="${BOARD_MEMBERS != null}" th:each="m : ${BOARD_MEMBERS}" th:value="${m}" th:text="${m}">One</option>
+                                    </select>
+                                </div>
+                                <div style="margin-left: 0.5em;">
+                                    <label for="exampleFormControlInput1" class="form-label" style="font-size: 14px;color:dimgray;">Приоритет задачи<span style="color:red">*</span></label>
+                                    <select class="form-select" aria-label="Default select example" id="priority">
+                                        <option th:if="${TASK_PRIORITES != null}" th:each="p : ${TASK_PRIORITES}" th:value="${p}" th:text="${p}">One</option>
+                                    </select>
+                                </div>
+                                <div style="margin-left: 0.5em;">
+                                    <label for="exampleFormControlInput1" class="form-label" style="font-size: 14px;color:dimgray;">Дедлайн<span style="color:red">*</span></label>
+                                    <input type="date" class="form-control" placeholder="Дедлайн" id="deadlineTime">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-row" style="margin-top: 2em;">
+                            <button class="btn btn-primary flex-grow-1" type="submit">Создать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="taskModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="d-flex flex-row justify-content-between" style="padding: 1em;">
+                    <span style="font-size: 20px;" id="taskModalTitle">Task title</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="font-size: 13px;"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex flex-row">
+                         <div class="d-flex flex-grow-1 flex-column">
+                             <div class="d-flex flex-row justify-content-between">
+                                 <div class="d-flex flex-column flex-grow-1" style="margin-right: 0.5em;max-width: 73%;">
+                                     <span style="color:dimgray;font-size: 15px;">Описание</span>
+                                     <span style="background-color: #091e4224;border-radius: 5px;padding: 0.3em;" id="taskDesc">Task Desc</span>
+                                 </div>
+                                 <div class="d-flex flex-column justify-content-center">
+                                     <span style="border-radius: 5px;padding: 0.3em;font-size: 15px;margin-top: 0.5em;" class="text-center bg-danger text-white" id="taskPriority">Priority</span>
+                                     <span style="background-color: #091e4224;border-radius: 5px;padding: 0.3em;font-size: 15px;margin-top: 0.3em;" class="text-center bg-info" id="taskAuthor">Author</span>
+                                     <span style="background-color: #091e4224;border-radius: 5px;padding: 0.3em;font-size: 15px;margin-top: 0.3em;" class="text-center bg-info" id="taskWorker">Worker</span>
+                                     <span style="background-color: #091e4224;border-radius: 5px;padding: 0.3em;font-size: 15px;margin-top: 0.3em;" class="text-center bg-warning" id="taskCreatedTime">Created Time</span>
+                                     <span style="border-radius: 5px;padding: 0.3em;font-size: 15px;margin-top: 0.3em;" class="text-center bg-warning" id="taskDeadlineTime">Deadline Time</span>
+                                 </div>
+                             </div>
+                         </div>
+                    </div>
+                    <div class="d-flex flex-row justify-content-end" id="taskDetails" style="display: none;margin-top: 1em;">
+                        <hr>
+                        <form id="deleteTaskForm" method="post">
+                            <input type="hidden" id="taskId">
+                            <button class="btn text-danger" type="submit">Удалить задачу</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

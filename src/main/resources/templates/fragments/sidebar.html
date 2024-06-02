@@ -2,20 +2,20 @@
      xmlns:th="http://www.thymeleaf.org" th:fragment="sidebar">
     <div class="d-flex flex-row align-items-center">
         <img th:src="@{/images/project.png}" style="height: 65%" alt="">
-        <span style="margin-left: 0.5em;font-size: 17px;font-weight: bold;" th:text="${session.CUR_WORKSPACE != null} ? ${session.CUR_WORKSPACE.title} : ''">Workspace Name</span>
+        <span style="margin-left: 0.5em;font-size: 17px;font-weight: bold;" th:text="${workspace != null} ? ${workspace.title} : ''">Workspace Name</span>
     </div>
     <hr>
-    <div class="d-flex flex-column" th:if="${session.CUR_WORKSPACE != null}">
-        <a class="d-flex flex-row options align-items-center" th:href="@{/workspaces/{id}/boards(id=${session.CUR_WORKSPACE.id})}">
+    <div class="d-flex flex-column" th:if="${workspace != null}">
+        <a class="d-flex flex-row options align-items-center" th:href="@{/workspaces/{id}/boards(id=${workspace.id})}">
             <img th:src="@{/svg/table-list-solid.svg}" alt="" style="height: 15px;margin-right: 0.5em;">
             <span>Доски</span>
         </a>
-        <th:block th:if="${session.CUR_USER_WORKSPACE_ROLE != null and session.CUR_USER_WORKSPACE_ROLE.name == 'WORKSPACE_ADMIN'}">
-            <a class="d-flex flex-row options align-items-center" th:href="@{/members}">
+        <th:block th:if="${CUR_USER_WORKSPACE_ROLE != null and CUR_USER_WORKSPACE_ROLE == 'WORKSPACE_ADMIN'}">
+            <a class="d-flex flex-row options align-items-center" th:href="@{/workspaces/{id}/members(id=${workspace.id})}">
                 <img th:src="@{/svg/user-solid.svg}" alt="" style="height: 15px;margin-right: 0.5em;">
                 <span>Участники</span>
             </a>
-            <a class="d-flex flex-row options align-items-center" th:href="@{/settings}">
+            <a class="d-flex flex-row options align-items-center" th:href="@{/workspaces/{id}/settings(id=${workspace.id})}">
                 <img th:src="@{/svg/gear-solid.svg}" alt="" style="height: 15px;margin-right: 0.5em;">
                 <span>Настройки</span>
             </a>

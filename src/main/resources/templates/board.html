@@ -15,8 +15,6 @@
 <body>
 <div th:replace="~{fragments/header.html :: header}"></div>
 <main class="w-100 m-auto" th:if="${board != null}">
-    <input type="hidden" id="boardId" th:value="${board.id}">
-    <input type="hidden" id="username" th:value="${session.CUR_USER.username}">
     <div class="">
         <div class="d-flex flex-row" style="min-height: 100vh;">
             <div th:replace="~{fragments/sidebar.html :: sidebar}"></div>
@@ -36,10 +34,12 @@
                         </form>
                     </div>
                     <div class="d-flex flex-row align-items-center">
-                        <button class="btn btn-primary"><img th:src="@{/svg/plus-solid.svg}" style="height: 15px;"
-                                                             alt=""></button>
-                        <button class="btn btn-primary" style="margin-left: 0.5em;" th:if="${session.CUR_USER_BOARD_ROLE == 'BOARD_ADMIN'}"><img
-                                th:src="@{/svg/user-plus-solid-white.svg}" style="height: 15px;" alt=""></button>
+                        <button class="btn btn-primary" th:if="${CUR_USER_BOARD_ROLE == 'BOARD_ADMIN' or CUR_USER_BOARD_ROLE == 'BOARD_MEMBER'}" data-bs-toggle="modal" data-bs-target="#addCardModal">
+                            <img th:src="@{/svg/plus-solid.svg}" style="height: 15px;" alt="">
+                        </button>
+                        <button class="btn btn-primary" style="margin-left: 0.5em;" th:if="${CUR_USER_BOARD_ROLE == 'BOARD_ADMIN' and board.boardVisibility == 'PRIVATE'}" data-bs-toggle="modal" data-bs-target="#addPersonToBoardModal">
+                            <img th:src="@{/svg/user-plus-solid-white.svg}" style="height: 15px;" alt="">
+                        </button>
                     </div>
 
                 </div>
@@ -51,7 +51,7 @@
                     <div class="horizontal-scrollable">
                         <div class="">
                             <div class="scroll">
-                                <div class="card" th:each="card: ${board.cards}">
+                                <div class="card" th:each="card: ${board.cards}" th:attr="data-card-id=${card.id},data-card-order=${card.cardOrder}">
                                     <div class="card-body">
                                         <div class="d-flex flex-column">
                                             <div class="d-flex flex-row">
@@ -60,35 +60,21 @@
                                                               style="font-size: 15px;font-weight: bold;color: dimgray" th:text="${card.title}">Card title</span>
                                                 </div>
                                             </div>
-                                            <div class="d-flex flex-column tasks" data-stage-id="1">
-                                                <div class="d-flex flex-column shadow-sm border task" data-task-id="1"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
+                                            <div class="d-flex flex-column tasks">
+                                                <a href="#" class="d-flex flex-column shadow-sm border task" data-bs-toggle="modal" data-bs-target="#taskModal" th:attr="data-task-id=${task.id}" th:each="task : ${card.tasks}" style="text-decoration: none;color:black;border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
                                                     <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
+                                                        <span class="bg-danger text-white text-center" style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;" th:text="${task.priority}">Priority</span>
                                                     </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
-                                                </div>
-                                                <div class="d-flex flex-column shadow-sm border task"
-                                                     style="border-radius: 5px;padding: 1em;background-color: white;margin-bottom: 0.5em;">
-                                                    <div class="d-flex flex-row">
-                                                        <span class="bg-danger text-white text-center"
-                                                              style="font-size: 11px;border-radius: 5px;font-weight: bold;padding-left: 3px;padding-right: 3px;">Priority</span>
-                                                    </div>
-                                                    <span style="font-size: 15px;" class="mt-1">Task 1</span>
+                                                    <span style="font-size: 15px;" class="mt-1" th:text="${task.title}">Task 1</span>
                                                     <div class="d-flex flex-row mt-2">
-                                                        <span class="bg-info p-1"
-                                                              style="font-size: 13px;border-radius: 5px;">Syrbek Olzhas</span>
-                                                        <span class="bg-warning p-1"
-                                                              style="font-size: 13px;border-radius: 5px;margin-left: 5px;">25 мая</span>
+                                                        <span class="bg-info p-1" style="font-size: 13px;border-radius: 5px;" th:text="${task.worker}">Author</span>
+                                                        <span class="bg-warning p-1" style="font-size: 13px;border-radius: 5px;margin-left: 5px;" th:text="${#temporals.format(task.deadlineTime, 'dd MMM yyyy')}">25 мая</span>
                                                     </div>
-                                                </div>
-                                                <div class="d-flex flex-column task"
-                                                     style="border-radius: 5px;margin-top: 0.5em;">
-                                                    <div class="d-flex flex-grow-1 justify-content-center add-task"
-                                                         style="border-radius: 5px;">
-                                                        <button class="btn" type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#exampleModal">Добавить задачу
+                                                </a>
+                                                <div class="d-flex flex-column" style="border-radius: 5px;margin-top: 0.5em;">
+                                                    <div class="d-flex flex-grow-1 justify-content-center add-task" style="border-radius: 5px;">
+                                                        <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#createTaskModal" th:attr="data-card-id=${card.id}">
+                                                            Добавить задачу
                                                         </button>
                                                     </div>
                                                 </div>
@@ -143,6 +129,11 @@
             </div>
         </div>
     </div>
+    <input type="hidden" id="boardId" th:value="${board.id}">
+    <input type="hidden" id="username" th:value="${session.CUR_USER.username}">
+    <input type="hidden" id="workspaceId" th:value="${board.workspaceId}">
+    <input type="hidden" id="cardId">
+    <input type="hidden" id="curUserBoardRole" th:value="${CUR_USER_BOARD_ROLE}">
     <div th:replace="~{fragments/modals :: modals}"></div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
@@ -154,5 +145,10 @@
 <script type="text/javascript" th:src="@{/js/board.js}"></script>
 <script type="text/javascript" th:src="@{/js/favoriteBoard.js}"></script>
 <script type="text/javascript" th:src="@{/js/unfavoriteBoard.js}"></script>
+<script type="text/javascript" th:src="@{/js/addCard.js}"></script>
+<script type="text/javascript" th:src="@{/js/createTask.js}"></script>
+<script type="text/javascript" th:src="@{/js/taskModal.js}"></script>
+<script type="text/javascript" th:src="@{/js/deleteTask.js}"></script>
+<script type="text/javascript" th:src="@{/js/addMemberBoard.js}"></script>
 </body>
 </html>

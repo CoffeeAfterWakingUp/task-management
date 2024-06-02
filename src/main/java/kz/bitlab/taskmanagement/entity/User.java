@@ -2,9 +2,13 @@ package kz.bitlab.taskmanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -36,6 +40,14 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Set<WorkspaceMember> workspaces = new HashSet<>();
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Task> authorTasks = new ArrayList<>();
+
+    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Task> workerTasks = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(

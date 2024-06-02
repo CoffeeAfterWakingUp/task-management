@@ -6,7 +6,7 @@ $(document).ready(function () {
             userRole: $("#personRole").val()
         };
 
-        $("#msg").hide();
+        $("#addPersonFormMsg").hide();
         $("#addPersonBtn").html("Loading...");
 
         $.ajax({
@@ -15,13 +15,13 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(dto),
             success: function (response) {
-                $("#createWorkspaceBtn").html("Добавить пользователя");
+                $("#addPersonBtn").html("Добавить пользователя");
                 console.log('Data sent successfully:', response.body);
-                // window.location.href = '/workspaces/' + response.body.id + '/boards';
+                window.location.href = '/workspaces/' + $("#workspaceId").val() + '/members';
             },
             error: function (error) {
-                $("#msg").html(error.responseJSON.errorMsg);
-                $("#msg").show();
+                $("#addPersonFormMsg").html(error.responseJSON.errorMsg);
+                $("#addPersonFormMsg").show();
                 $("#addPersonBtn").html("Добавить пользователя");
                 console.error('Error sending data:', error.responseJSON);
             }

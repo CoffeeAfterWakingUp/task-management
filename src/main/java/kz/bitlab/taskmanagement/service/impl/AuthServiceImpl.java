@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Properties;
 
-import static kz.bitlab.taskmanagement.util.SessionAttribute.CUR_USER;
+import static kz.bitlab.taskmanagement.util.SessionAttributes.CUR_USER;
 
 @Service
 @RequiredArgsConstructor
@@ -87,18 +87,18 @@ public class AuthServiceImpl implements AuthService {
                     .errorMsg(PROPERTIES.getProperty("error.emailExists"))
                     .build();
         }
-        Optional<User> userByUsername = userService.getByUsername(username);
-        if (userByUsername.isPresent()) {
+        User user = userService.getByUsername(username);
+        if (user != null) {
             return ApiResponse.<String>builder()
                     .status(HttpStatus.BAD_REQUEST.value())
                     .errorMsg(PROPERTIES.getProperty("error.usernameExists"))
                     .build();
         }
 
-        User user = userMapper.toUser(registerDTO);
-        user.setRegisterTime(LocalDateTime.now());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.create(user);
+        User newUser = userMapper.toUser(registerDTO);
+        newUser.setRegisterTime(LocalDateTime.now());
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        userService.create(newUser);
 
         return ApiResponse.<String>builder()
                 .status(HttpStatus.OK.value())
@@ -125,9 +125,8 @@ public class AuthServiceImpl implements AuthService {
         if (session != null) {
             UserDetails authUser = (UserDetails) authentication.getPrincipal();
             String username = authUser.getUsername();
-            Optional<User> userOpt = userService.getByUsername(username);
-            if (userOpt.isPresent()) {
-                User user = userOpt.get();
+            User user = userService.getByUsernameOrElseThrow(username);
+            if (user != null) {
                 UserDTO userDTO = userMapper.toDTO(user);
                 session.setAttribute(CUR_USER, userDTO);
                 return "ok";

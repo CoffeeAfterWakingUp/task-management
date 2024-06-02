@@ -2,6 +2,11 @@ package kz.bitlab.taskmanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -24,6 +29,10 @@ public class Card {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Board board;
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Task> tasks = new ArrayList<>();
 
     public Card(Integer order, String title) {
         this.cardOrder = order;

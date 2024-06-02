@@ -40,11 +40,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public Optional<User> getByUsername(String username) {
+    public User getByUsernameOrElseThrow(String username) {
         if (username == null) throw new BadRequestException("Username is null");
         Optional<User> userOpt = userRepository.findByUsername(username);
-        if (userOpt.isEmpty()) throw new NotFoundException("User is not found!");
-        return userOpt;
+        return userOpt.orElseThrow(() -> new NotFoundException("Не удалось найти пользователя!"));
+    }
+
+    @Override
+    public User getByUsername(String username) {
+        if (username == null) throw new BadRequestException("Username is null");
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        return userOpt.orElse(null);
     }
 
     @Override
@@ -69,7 +75,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (username == null) throw new BadRequestException("username is null");
         if (boardId == null) throw new BadRequestException("board id is null");
 
-        User user = getByUsername(username).get();
+        User user = getByUsernameOrElseThrow(username);
         Board board = boardService.getById(boardId);
 
         user.addFavoriteBoard(board);
@@ -81,10 +87,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (username == null) throw new BadRequestException("username is null");
         if (boardId == null) throw new BadRequestException("board id is null");
 
-        User user = getByUsername(username).get();
+        User user = getByUsernameOrElseThrow(username);
         Board board = boardService.getById(boardId);
 
         user.removeFavoriteBoard(board);
         userRepository.save(user);
+    }
+
+    @Override
+    public void delete(Long id) {
+        if (id == null) throw new BadRequestException("id is null");
+        userRepository.deleteById(id);
     }
 }

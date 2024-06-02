@@ -2,11 +2,8 @@ package kz.bitlab.taskmanagement.rest;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kz.bitlab.taskmanagement.adapter.WorkspaceAdapter;
-import kz.bitlab.taskmanagement.dto.AddUserToWorkspaceDTO;
-import kz.bitlab.taskmanagement.dto.ApiResponse;
-import kz.bitlab.taskmanagement.dto.CreateWorkspaceDTO;
-import kz.bitlab.taskmanagement.dto.WorkspaceDTO;
+import kz.bitlab.taskmanagement.dto.*;
+import kz.bitlab.taskmanagement.rest.adapter.WorkspaceRestAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class WorkspaceRestController {
 
-    private final WorkspaceAdapter workspaceAdapter;
+    private final WorkspaceRestAdapter workspaceAdapter;
 
     @PostMapping
     @PreAuthorize("isAuthenticated()")
@@ -36,5 +33,22 @@ public class WorkspaceRestController {
         ApiResponse<Boolean> apiResponse = workspaceAdapter.addUser(addUserToWorkspaceDTO, id);
         return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiResponse.getStatus()));
     }
+
+    @PatchMapping("/{id}/workspace-name")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse<Boolean>> editWorkspaceName(@PathVariable Long id,
+                                                                  @RequestBody EditWorkspaceNameDTO editWorkspaceNameDTO) {
+        ApiResponse<Boolean> apiResponse = workspaceAdapter.editWorkspaceName(id, editWorkspaceNameDTO);
+        return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiResponse.getStatus()));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<ApiResponse<Boolean>> deleteWorkspace(@PathVariable Long id) {
+        ApiResponse<Boolean> apiResponse = workspaceAdapter.deleteWorkspace(id);
+        return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiResponse.getStatus()));
+    }
+
+
 
 }

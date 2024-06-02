@@ -3,11 +3,10 @@ package kz.bitlab.taskmanagement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Setter
 @Getter
@@ -29,9 +28,11 @@ public class Workspace {
     private String description;
 
     @OneToMany(mappedBy = "workspace", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Board> boards = new ArrayList<>();
 
     @OneToMany(mappedBy = "workspace")
-    private Set<WorkspaceMember> members = new HashSet<>();
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<WorkspaceMember> members = new LinkedHashSet<>();
 
 }

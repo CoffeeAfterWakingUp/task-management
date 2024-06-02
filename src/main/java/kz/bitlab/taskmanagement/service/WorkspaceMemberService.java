@@ -21,4 +21,6 @@ public interface WorkspaceMemberService {
     WorkspaceMember create(Workspace workspace, User user, WorkspaceMemberRole memberRole);
     List<WorkspaceMember> getByUser(String username);
     WorkspaceMember getById(Workspace workspace, User user);
+    WorkspaceMember getById(Long workspaceId, String username);
+    void delete(WorkspaceMember workspaceMember);
 }

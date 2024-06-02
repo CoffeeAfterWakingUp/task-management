@@ -21,27 +21,7 @@
                 <div th:replace="~{fragments/workspace-header.html :: workspace-header}"></div>
                 <hr>
                 <div class="d-flex flex-column" style="padding: 1em;">
-                    <div style="font-size: 18px; margin-bottom: 1em;font-weight: bold;">Boards</div>
-                    <div class="d-flex flex-row justify-content-between">
-                        <div class="d-flex flex-column">
-                            <span style="font-size: 13px;font-weight: bold;margin-bottom: 0.5em;color:dimgray;">Sort by</span>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                        </div>
-                        <div class="d-flex flex-column">
-                            <span style="font-size: 13px;font-weight: bold;margin-bottom: 0.5em;color:dimgray;">Search</span>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-                                <button class="btn btn-primary" type="button" id="button-addon2">
-                                    <img th:src="@{/svg/magnifying-glass-solid.svg}" style="height: 15px;" alt="">
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <div style="font-size: 18px; margin-bottom: 1em;font-weight: bold;">Доски</div>
                     <div class="">
                         <div class="row row-cols-1 row-cols-md-3 g-4">
                             <div class="col">
@@ -84,7 +64,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col" th:if="${workspace}" th:each="board: ${workspace.boards}">
+                            <div class="col" th:if="${workspace != null and CUR_USER_BOARDS != null}" th:each="board: ${CUR_USER_BOARDS}">
                                 <a class="card h-100" th:href="@{/workspaces/{wId}/boards/{bId}(wId=${workspace.id},bId=${board.id})}" style="min-height: 100px;text-decoration: none;">
                                     <div class="card-body">
                                         <div class="d-flex flex-row align-items-start justify-content-start">
@@ -113,26 +93,6 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="d-flex flex-row align-items-center justify-content-center" style="margin-top: 2em;">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
                     </div>
                 </div>
             </div>

@@ -12,15 +12,6 @@
                         Ваши рабочие пространства
                     </a>
                     <ul class="dropdown-menu">
-                        <th:block th:if="${session.CUR_WORKSPACE != null}">
-                            <li><span class="dropdown-header" style="font-size: 13px;font-weight: bold;">Текущее рабочее пространство</span></li>
-                            <li><a class="dropdown-item"
-                                   th:href="@{/workspaces/{id}/boards(id=${session.CUR_WORKSPACE.id})}"
-                                   th:text="${session.CUR_WORKSPACE.title}">Action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                        </th:block>
                         <th:block th:if="${session.ALL_WORKSPACES != null and session.ALL_WORKSPACES.size() != 0}">
                             <li><span class="dropdown-header" style="font-size: 13px;font-weight: bold;">Ваши рабочие пространства</span>
                             </li>
@@ -88,13 +79,6 @@
                         <img th:src="@{/svg/plus-solid.svg}" style="height: 15px;" alt="">
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item d-flex flex-row align-items-center" href="#">
-                            <button class="btn" type="button" data-bs-toggle="modal" data-bs-target="#createBoardModal">
-                                <img th:src="@{/svg/table-list-solid.svg}" alt=""
-                                     style="height: 15px;margin-right: 0.5em;">
-                                <span>Создать доску</span>
-                            </button>
-                        </a></li>
                         <li><a class="dropdown-item d-flex flex-row align-items-center">
                             <button class="btn" type="button" data-bs-toggle="modal"
                                     data-bs-target="#createWorkspaceModal">
@@ -129,7 +113,7 @@
                             </span>
                             </span>
                         </li>
-                        <li><a class="dropdown-item" href="#">Профиль</a></li>
+                        <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" th:href="@{/logout}">Выйти</a></li>
                     </ul>
                 </li>

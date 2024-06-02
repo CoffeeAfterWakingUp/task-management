@@ -9,14 +9,21 @@ import kz.bitlab.taskmanagement.exception.BadRequestException;
 import kz.bitlab.taskmanagement.exception.NotFoundException;
 import kz.bitlab.taskmanagement.repository.BoardMemberRepository;
 import kz.bitlab.taskmanagement.service.BoardMemberService;
+import kz.bitlab.taskmanagement.service.BoardService;
+import kz.bitlab.taskmanagement.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BoardMemberServiceImpl implements BoardMemberService {
 
     private final BoardMemberRepository boardMemberRepository;
+    private final UserService userService;
+    private final BoardService boardService;
 
     @Override
     public BoardMember create(Board board, User user, BoardMemberRole boardMemberRole) {
@@ -48,5 +55,21 @@ public class BoardMemberServiceImpl implements BoardMemberService {
         }
         BoardMemberKey id = id(board, user);
         return boardMemberRepository.findById(id).orElseThrow(() -> new NotFoundException("Board Member not found"));
+    }
+
+    @Override
+    public BoardMember getById(Long boardId, String username) {
+        if (boardId == null) throw new BadRequestException("boardId is null");
+        if (username == null) throw new BadRequestException("username is null");
+        User user = userService.getByUsernameOrElseThrow(username);
+        Board board = boardService.getById(boardId);
+        return getById(board, user);
+    }
+
+    @Override
+    public List<BoardMember> getUserWorkspaceBoards(String username, Long workspaceId) {
+        if (username == null) throw new BadRequestException("username is null");
+        if (workspaceId == null) throw new BadRequestException("workspaceId is null");
+        return boardMemberRepository.findByUserAndWorkspace(username, workspaceId).orElse(Collections.emptyList());
     }
 }

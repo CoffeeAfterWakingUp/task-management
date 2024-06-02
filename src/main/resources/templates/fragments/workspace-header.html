@@ -3,12 +3,11 @@
         <img th:src="@{/images/project.png}" style="height: 80%" alt="">
         <div class="d-flex flex-column">
             <span style="margin-left: 0.5em;font-size: 20px;font-weight: bold;" th:text="${workspace} ? ${workspace.title} : ''">Workspace Name</span>
-            <span style="margin-left: 0.7em;font-size: 14px;font-weight: 300;color: gray;">Private</span>
         </div>
     </div>
     <div class="d-flex flex-row">
         <button class="btn" type="button" data-bs-toggle="modal"
-                data-bs-target="#addPersonModal" th:if="${session.CUR_USER_WORKSPACE_ROLE != null and session.CUR_USER_WORKSPACE_ROLE.name == 'WORKSPACE_ADMIN'}">
+                data-bs-target="#addPersonModal" th:if="${CUR_USER_WORKSPACE_ROLE != null and CUR_USER_WORKSPACE_ROLE == 'WORKSPACE_ADMIN'}">
             <img th:src="@{/svg/user-plus-solid.svg}" style="height: 20px;" alt="">
         </button>
     </div>

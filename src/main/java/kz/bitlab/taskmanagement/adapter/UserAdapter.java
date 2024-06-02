@@ -8,12 +8,11 @@ import kz.bitlab.taskmanagement.entity.User;
 import kz.bitlab.taskmanagement.exception.BadRequestException;
 import kz.bitlab.taskmanagement.mapper.BoardMapper;
 import kz.bitlab.taskmanagement.service.UserService;
-import kz.bitlab.taskmanagement.util.SessionAttribute;
+import kz.bitlab.taskmanagement.util.SessionAttributes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.Set;
 
 @Component
@@ -26,18 +25,18 @@ public class UserAdapter {
     public ApiResponse<Boolean> addFavoritedBoard(String username, FavoriteBoardDTO favoriteBoardDTO, HttpSession session) {
         if (favoriteBoardDTO == null) throw new BadRequestException("Favorite board is null");
         userService.addFavoriteBoard(username, favoriteBoardDTO.getBoardId());
-        Optional<User> userOpt = userService.getByUsername(username);
-        Set<BoardDTO> favoritedBoards = boardMapper.toDTOs(userOpt.get().getFavoriteBoards());
-        session.setAttribute(SessionAttribute.FAVORITED_BOARDS, favoritedBoards);
+        User user = userService.getByUsernameOrElseThrow(username);
+        Set<BoardDTO> favoritedBoards = boardMapper.toDTOs(user.getFavoriteBoards());
+        session.setAttribute(SessionAttributes.FAVORITED_BOARDS, favoritedBoards);
         return ApiResponse.<Boolean>builder().body(Boolean.TRUE).status(HttpStatus.CREATED.value()).build();
     }
 
     public ApiResponse<Boolean> removeFavoritedBoard(String username, FavoriteBoardDTO favoriteBoardDTO, HttpSession session) {
         if (favoriteBoardDTO == null) throw new BadRequestException("Favorite board is null");
         userService.removeFavoritedBoard(username, favoriteBoardDTO.getBoardId());
-        Optional<User> userOpt = userService.getByUsername(username);
-        Set<BoardDTO> favoritedBoards = boardMapper.toDTOs(userOpt.get().getFavoriteBoards());
-        session.setAttribute(SessionAttribute.FAVORITED_BOARDS, favoritedBoards);
+        User user = userService.getByUsernameOrElseThrow(username);
+        Set<BoardDTO> favoritedBoards = boardMapper.toDTOs(user.getFavoriteBoards());
+        session.setAttribute(SessionAttributes.FAVORITED_BOARDS, favoritedBoards);
         return ApiResponse.<Boolean>builder().body(Boolean.TRUE).status(HttpStatus.CREATED.value()).build();
     }
 }

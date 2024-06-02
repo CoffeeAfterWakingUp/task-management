@@ -11,13 +11,12 @@ import kz.bitlab.taskmanagement.mapper.BoardMapper;
 import kz.bitlab.taskmanagement.mapper.WorkspaceMemberMapper;
 import kz.bitlab.taskmanagement.service.UserService;
 import kz.bitlab.taskmanagement.service.WorkspaceMemberService;
-import kz.bitlab.taskmanagement.util.SessionAttribute;
+import kz.bitlab.taskmanagement.util.SessionAttributes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,15 +30,15 @@ public class MainAdapter {
     private final BoardMapper boardMapper;
 
     public String mainPage(HttpSession session, Model model) {
-        UserDTO currentUser = (UserDTO) session.getAttribute(SessionAttribute.CUR_USER);
-        Optional<User> userOpt = userService.getByUsername(currentUser.getUsername());
-        Set<BoardDTO> favoritedBoards = boardMapper.toDTOs(userOpt.get().getFavoriteBoards());
+        UserDTO currentUser = (UserDTO) session.getAttribute(SessionAttributes.CUR_USER);
+        User user = userService.getByUsernameOrElseThrow(currentUser.getUsername());
+        Set<BoardDTO> favoritedBoards = boardMapper.toDTOs(user.getFavoriteBoards());
         List<WorkspaceMember> workspaceMembers = workspaceMemberService.getByUser(currentUser.getUsername());
         List<UserWorkspaceDTO> userWorkspaceDTOS = workspaceMemberMapper.toDTOs(workspaceMembers);
         List<WorkspaceDTO> allWorkspaces = userWorkspaceDTOS.stream().map(UserWorkspaceDTO::getWorkspaceDTO).collect(Collectors.toList());
         model.addAttribute("userWorkspaces", userWorkspaceDTOS);
-        session.setAttribute(SessionAttribute.ALL_WORKSPACES, allWorkspaces);
-        session.setAttribute(SessionAttribute.FAVORITED_BOARDS, favoritedBoards);
+        session.setAttribute(SessionAttributes.ALL_WORKSPACES, allWorkspaces);
+        session.setAttribute(SessionAttributes.FAVORITED_BOARDS, favoritedBoards);
         return "main";
     }
 }

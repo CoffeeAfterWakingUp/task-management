@@ -6,7 +6,9 @@ import java.util.Optional;
 
 public interface UserService {
 
-    Optional<User> getByUsername(String username);
+    User getByUsernameOrElseThrow(String username);
+
+    User getByUsername(String username);
 
     Optional<User> getByEmail(String email);
 
@@ -17,6 +19,8 @@ public interface UserService {
     void removeFavoritedBoard(String username, Long boardId);
 
     User getById(Long id);
+
+    void delete(Long id);
 
 
 }

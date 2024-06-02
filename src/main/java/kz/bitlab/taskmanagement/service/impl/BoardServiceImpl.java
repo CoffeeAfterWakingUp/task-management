@@ -8,6 +8,7 @@ import kz.bitlab.taskmanagement.exception.BadRequestException;
 import kz.bitlab.taskmanagement.exception.NotFoundException;
 import kz.bitlab.taskmanagement.repository.BoardRepository;
 import kz.bitlab.taskmanagement.service.BoardService;
+import kz.bitlab.taskmanagement.service.CardService;
 import kz.bitlab.taskmanagement.service.WorkspaceService;
 import kz.bitlab.taskmanagement.util.comparator.SortByCardOrder;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,6 +28,7 @@ public class BoardServiceImpl implements BoardService {
     private final BoardRepository boardRepository;
     @Lazy
     private final WorkspaceService workspaceService;
+    private final CardService cardService;
 
     @Override
     public Board create(Board board, Long workspaceId) {
@@ -53,5 +56,27 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardOpt.get();
         board.getCards().sort(new SortByCardOrder());
         return boardOpt.orElseThrow(() -> new NotFoundException("Board is not found"));
+    }
+
+    @Override
+    public void updateCardOrders(List<Integer> cardIds, Long boardId) {
+        if (cardIds == null || cardIds.isEmpty()) throw new BadRequestException("cardIds is empty");
+        if (boardId == null) throw new BadRequestException("boardId is empty");
+
+        Board board = getById(boardId);
+        List<Card> cards = new ArrayList<>();
+
+        for (int i = 0; i < cardIds.size(); i++) {
+            Integer cardId = cardIds.get(i);
+            Card card = cardService.getById(cardId.longValue());
+            card.setCardOrder(i + 1);
+            cards.add(card);
+        }
+        cardService.updateAll(cards);
+    }
+
+    @Override
+    public void delete(Board board) {
+        boardRepository.delete(board);
     }
 }
