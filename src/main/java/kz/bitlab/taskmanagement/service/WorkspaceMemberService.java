@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface WorkspaceMemberService {
 
-     default WorkspaceMemberKey id(Workspace workspace, User user) {
+    default WorkspaceMemberKey id(Workspace workspace, User user) {
         if (workspace.getId() == null) throw new BadRequestException("Workspace id is null");
         if (user.getId() == null) throw new BadRequestException("User id is null");
 
@@ -19,8 +19,12 @@ public interface WorkspaceMemberService {
     }
 
     WorkspaceMember create(Workspace workspace, User user, WorkspaceMemberRole memberRole);
+
     List<WorkspaceMember> getByUser(String username);
+
     WorkspaceMember getById(Workspace workspace, User user);
+
     WorkspaceMember getById(Long workspaceId, String username);
+
     void delete(WorkspaceMember workspaceMember);
 }

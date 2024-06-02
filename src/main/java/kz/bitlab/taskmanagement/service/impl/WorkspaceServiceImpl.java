@@ -14,7 +14,8 @@ import kz.bitlab.taskmanagement.util.PropertiesReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Optional;
+import java.util.Properties;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +66,8 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     @Override
     public void updateWorkspaceName(Long id, String newWorkspaceName) {
         if (id == null) throw new BadRequestException("id is null");
-        if (newWorkspaceName == null || newWorkspaceName.isEmpty()) throw new BadRequestException("workspace name is empty");
+        if (newWorkspaceName == null || newWorkspaceName.isEmpty())
+            throw new BadRequestException("workspace name is empty");
 
         Workspace workspace = getById(id);
         workspace.setTitle(newWorkspaceName);

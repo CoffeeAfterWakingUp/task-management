@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 public interface AuthService {
 
     ApiResponse<String> register(RegisterDTO registerDTO);
+
     String loginError(HttpServletRequest request);
+
     String loginSuccess(HttpServletRequest request, Authentication authentication);
 }

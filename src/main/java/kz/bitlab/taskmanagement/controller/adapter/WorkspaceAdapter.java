@@ -2,25 +2,24 @@ package kz.bitlab.taskmanagement.controller.adapter;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kz.bitlab.taskmanagement.dto.*;
+import kz.bitlab.taskmanagement.dto.BoardDTO;
+import kz.bitlab.taskmanagement.dto.UserDTO;
+import kz.bitlab.taskmanagement.dto.WorkspaceMemberDTO;
+import kz.bitlab.taskmanagement.dto.WorkspaceMembersDTO;
 import kz.bitlab.taskmanagement.entity.BoardMember;
-import kz.bitlab.taskmanagement.entity.User;
 import kz.bitlab.taskmanagement.entity.Workspace;
 import kz.bitlab.taskmanagement.entity.WorkspaceMember;
 import kz.bitlab.taskmanagement.enums.BoardVisibility;
 import kz.bitlab.taskmanagement.enums.WorkspaceMemberRole;
 import kz.bitlab.taskmanagement.mapper.BoardMapper;
-import kz.bitlab.taskmanagement.mapper.WorkspaceMapper;
 import kz.bitlab.taskmanagement.mapper.WorkspaceMemberMapper;
 import kz.bitlab.taskmanagement.service.BoardMemberService;
-import kz.bitlab.taskmanagement.service.UserService;
 import kz.bitlab.taskmanagement.service.WorkspaceMemberService;
 import kz.bitlab.taskmanagement.service.WorkspaceService;
 import kz.bitlab.taskmanagement.util.ModelAttributes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +33,7 @@ import static kz.bitlab.taskmanagement.util.SessionAttributes.CUR_USER;
 @RequiredArgsConstructor
 public class WorkspaceAdapter {
 
-    private final UserService userService;
     private final WorkspaceService workspaceService;
-    private final WorkspaceMapper workspaceMapper;
     private final WorkspaceMemberMapper workspaceMemberMapper;
     private final WorkspaceMemberService workspaceMemberService;
     private final BoardMemberService boardMemberService;

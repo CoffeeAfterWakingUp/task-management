@@ -9,6 +9,7 @@ import org.mapstruct.Mapper;
 public interface WorkspaceMapper {
 
     Workspace toEntity(CreateWorkspaceDTO createWorkspaceDTO);
+
     WorkspaceDTO toDTO(Workspace workspace);
 
 

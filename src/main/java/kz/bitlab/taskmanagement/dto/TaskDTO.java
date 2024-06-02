@@ -18,9 +18,9 @@ public class TaskDTO {
     private String title;
     private String description;
     private String priority;
-    @JsonFormat(pattern="dd MMM yyyy")
+    @JsonFormat(pattern = "dd MMM yyyy")
     private LocalDate deadlineTime;
-    @JsonFormat(pattern="dd MMM yyyy")
+    @JsonFormat(pattern = "dd MMM yyyy")
     private LocalDate createdTime;
     private String author;
     private String worker;

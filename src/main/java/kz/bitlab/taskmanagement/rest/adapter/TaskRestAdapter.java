@@ -1,6 +1,5 @@
 package kz.bitlab.taskmanagement.rest.adapter;
 
-import jakarta.servlet.http.HttpServletRequest;
 import kz.bitlab.taskmanagement.dto.ApiResponse;
 import kz.bitlab.taskmanagement.dto.CreateTaskDTO;
 import kz.bitlab.taskmanagement.dto.TaskDTO;
@@ -55,7 +54,6 @@ public class TaskRestAdapter {
                 .status(HttpStatus.CREATED.value())
                 .build();
     }
-
 
 
 }

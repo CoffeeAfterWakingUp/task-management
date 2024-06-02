@@ -31,7 +31,7 @@ public class SecurityConfig {
                                 new AntPathRequestMatcher("/api/**"),
                                 new AntPathRequestMatcher("/error"),
                                 new AntPathRequestMatcher("/**")
-                                ).permitAll()
+                        ).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .formLogin(form -> form
@@ -57,7 +57,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    AuthenticationManager authenticationManager (HttpSecurity http, PasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception {
+    AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
                 .userDetailsService(userDetailsService)

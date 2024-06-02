@@ -3,9 +3,6 @@ package kz.bitlab.taskmanagement.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kz.bitlab.taskmanagement.controller.adapter.WorkspaceAdapter;
-import kz.bitlab.taskmanagement.dto.WorkspaceMemberDTO;
-import kz.bitlab.taskmanagement.enums.WorkspaceMemberRole;
-import kz.bitlab.taskmanagement.util.ModelAttributes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -27,7 +24,7 @@ public class WorkspaceController {
     public void populateModel(@PathVariable Long id, HttpServletRequest request, Model model) {
         workspaceAdapter.populateModel(id, request, model);
     }
-    
+
     @GetMapping("/{id}/boards")
     @PreAuthorize("isAuthenticated()")
     public String getWorkspaceBoards(@PathVariable Long id, Model model, HttpServletRequest request) {
@@ -47,6 +44,6 @@ public class WorkspaceController {
     public String getWorkspaceSettings(@PathVariable Long id) {
         return workspaceAdapter.getWorkspaceSettings();
     }
-    
-    
+
+
 }

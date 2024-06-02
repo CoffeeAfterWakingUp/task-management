@@ -18,7 +18,10 @@ public interface BoardMemberService {
     }
 
     BoardMember create(Board board, User user, BoardMemberRole boardMemberRole);
+
     BoardMember getById(Board board, User user);
+
     BoardMember getById(Long boardId, String username);
+
     List<BoardMember> getUserWorkspaceBoards(String username, Long workspaceId);
 }

@@ -29,7 +29,7 @@ public class WorkspaceRestController {
     @PostMapping("/{id}/members")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ApiResponse<Boolean>> addUser(@RequestBody AddUserToWorkspaceDTO addUserToWorkspaceDTO,
-                        @PathVariable Long id) {
+                                                        @PathVariable Long id) {
         ApiResponse<Boolean> apiResponse = workspaceAdapter.addUser(addUserToWorkspaceDTO, id);
         return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiResponse.getStatus()));
     }
@@ -48,7 +48,6 @@ public class WorkspaceRestController {
         ApiResponse<Boolean> apiResponse = workspaceAdapter.deleteWorkspace(id);
         return new ResponseEntity<>(apiResponse, HttpStatusCode.valueOf(apiResponse.getStatus()));
     }
-
 
 
 }

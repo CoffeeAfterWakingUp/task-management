@@ -19,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor(onConstructor_ ={@Lazy})
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class BoardRestAdapter {
 
     @Lazy

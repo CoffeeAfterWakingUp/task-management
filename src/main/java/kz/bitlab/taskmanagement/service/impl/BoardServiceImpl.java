@@ -17,12 +17,11 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ ={@Lazy})
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;

@@ -1,6 +1,5 @@
 package kz.bitlab.taskmanagement.service.impl;
 
-import kz.bitlab.taskmanagement.entity.Board;
 import kz.bitlab.taskmanagement.entity.User;
 import kz.bitlab.taskmanagement.entity.Workspace;
 import kz.bitlab.taskmanagement.entity.WorkspaceMember;
@@ -19,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor(onConstructor_ ={@Lazy})
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class WorkspaceMemberServiceImpl implements WorkspaceMemberService {
 
     private final WorkspaceMemberRepository workspaceMemberRepository;

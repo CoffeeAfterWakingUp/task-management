@@ -60,8 +60,8 @@ public class BoardAdapter {
         if (sessionAttribute == null) {
             recentBoards = new LinkedList<>();
         } else {
-            recentBoards = (LinkedList<BoardDTO>)sessionAttribute;
-            if (recentBoards.contains(boardDTO)) recentBoards.remove(boardDTO);
+            recentBoards = (LinkedList<BoardDTO>) sessionAttribute;
+            recentBoards.remove(boardDTO);
         }
         recentBoards.addFirst(boardDTO);
         session.setAttribute(SessionAttributes.RECENT_BOARDS, recentBoards);
